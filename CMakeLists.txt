@@ -22,6 +22,15 @@ target_link_libraries(PlaneMILGUI
                     ${Qt5Widgets_LIBRARIES}
                     ${PROTOBUF_LIBRARIES})
 
+add_library(gui_example_time_widget SHARED ${headers_MOC}
+GUIExampleTimeWidget.cc)
+target_link_libraries(gui_example_time_widget ${GAZEBO_LIBRARIES}
+    # ${OGRE_LIBRARIES}
+    # ${OGRE-Terrain_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${Qt5Widgets_LIBRARIES}
+    ${PROTOBUF_LIBRARIES})
+
 add_executable(PlaneMILCLI PlaneMILCLI.cc)
 target_link_libraries(PlaneMILCLI ${GAZEBO_LIBRARIES})
 target_link_libraries(PlaneMILCLI readline)

@@ -4,6 +4,8 @@
     <gui>
       <!-- A plugin for controlling the Cessna with the keyboard -->
       <plugin name="PlaneMIL_Keyboard" filename="./libPlaneMILGUI.so"/>
+      
+      <plugin name="TestGUIPlugin" filename="./libgui_example_time_widget.so"/>
 
       <camera name="user_camera">
         <pose>-16 0 4 0 0 0</pose>
