@@ -30,7 +30,7 @@
 
 namespace gazebo
 {
-  /// \brief A GUI plugin that controls the Cessna model using the keyboard.
+  /// \brief A GUI plugin that controls the PlaneMIL model using the keyboard.
   /// If you are reading this, feel free to improve this plugin by adding
   /// graphical widgets to make the demo more interesting and fun.
   ///
@@ -115,7 +115,7 @@ namespace gazebo
     /// \brief Angle increment/decrement each time a key is pressed;
     private: ignition::math::Angle angleStep;
 
-    /// \brief State received from the Cessna plugin.
+    /// \brief State received from the PlaneMIL plugin.
     private: msgs::Cessna state;
 
     /// \brief Protection.
