@@ -1,10 +1,11 @@
 #ifndef PLANE_MIL_GUI_PLUGIN
+#define PLANE_MIL_GUI_PLUGIN
+
 #include <string>
 
 #include <gazebo/common/Plugin.hh>
 #include <gazebo/gui/GuiPlugin.hh>
 #include <gazebo/transport/transport.hh>
-#include <gazebo/msgs/msgs.hh>
 
 namespace gazebo
 {

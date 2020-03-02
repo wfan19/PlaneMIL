@@ -15,18 +15,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 add_library(PlaneMIL SHARED PlaneMILPlugin.cc)
 target_link_libraries(PlaneMIL ${GAZEBO_LIBRARIES})
 
-add_library(PlaneMILGUI SHARED ${headers_MOC}
-PlaneMILGUIPlugin.cc)
+add_library(PlaneMILGUI SHARED ${headers_MOC} PlaneMILGUIPlugin.cc)
 target_link_libraries(PlaneMILGUI ${GAZEBO_LIBRARIES}
-    # ${OGRE_LIBRARIES}
-    # ${OGRE-Terrain_LIBRARIES}
-    ${Qt5Core_LIBRARIES}
-    ${Qt5Widgets_LIBRARIES}
-    ${PROTOBUF_LIBRARIES})
-
-add_library(gui_example_time_widget SHARED ${headers_MOC}
-GUIExampleTimeWidget.cc)
-target_link_libraries(gui_example_time_widget ${GAZEBO_LIBRARIES}
     # ${OGRE_LIBRARIES}
     # ${OGRE-Terrain_LIBRARIES}
     ${Qt5Core_LIBRARIES}

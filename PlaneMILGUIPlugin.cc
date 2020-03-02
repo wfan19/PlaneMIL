@@ -1,4 +1,6 @@
-#include "include/PlaneMILGUIPlugin.hh"
+#include <sstream>
+#include <gazebo/msgs/msgs.hh>
+#include "./include/PlaneMILGUIPlugin.hh"
 
 using namespace gazebo;
 
