@@ -29,12 +29,12 @@ GZ_REGISTER_GUI_PLUGIN(PlaneMILGUIPlugin)
 PlaneMILGUIPlugin::PlaneMILGUIPlugin()
   : GUIPlugin()
 {
-  // This is needed to avoid the creation of a black widget with default size.
-  this->move(-1, -1);
-  this->resize(1, 1);
+  // // This is needed to avoid the creation of a black widget with default size.
+  // this->move(-1, -1);
+  // this->resize(1, 1);
 
-  // Set the increment or decrement in angle per key pressed.
-  this->angleStep.Degree(1.0);
+  // // Set the increment or decrement in angle per key pressed.
+  // this->angleStep.Degree(1.0);
 
   // Initialize transport.
   this->gzNode = transport::NodePtr(new transport::Node());
@@ -44,291 +44,291 @@ PlaneMILGUIPlugin::PlaneMILGUIPlugin()
   this->stateSub = this->gzNode->Subscribe<msgs::Cessna>(
     "~/cessna_c172/state", &PlaneMILGUIPlugin::OnState, this);
 
-  // Connect hotkeys.
-  QShortcut *increaseThrust = new QShortcut(QKeySequence("w"), this);
-  QObject::connect(increaseThrust, SIGNAL(activated()), this,
-      SLOT(OnIncreaseThrust()));
+  // // Connect hotkeys.
+  // QShortcut *increaseThrust = new QShortcut(QKeySequence("w"), this);
+  // QObject::connect(increaseThrust, SIGNAL(activated()), this,
+  //     SLOT(OnIncreaseThrust()));
 
-  QShortcut *decreaseThrust = new QShortcut(QKeySequence("s"), this);
-  QObject::connect(decreaseThrust, SIGNAL(activated()), this,
-      SLOT(OnDecreaseThrust()));
+  // QShortcut *decreaseThrust = new QShortcut(QKeySequence("s"), this);
+  // QObject::connect(decreaseThrust, SIGNAL(activated()), this,
+  //     SLOT(OnDecreaseThrust()));
 
-  QShortcut *increaseFlaps = new QShortcut(QKeySequence("g"), this);
-  QObject::connect(increaseFlaps, SIGNAL(activated()), this,
-      SLOT(OnIncreaseFlaps()));
+  // QShortcut *increaseFlaps = new QShortcut(QKeySequence("g"), this);
+  // QObject::connect(increaseFlaps, SIGNAL(activated()), this,
+  //     SLOT(OnIncreaseFlaps()));
 
-  QShortcut *decreaseFlaps = new QShortcut(QKeySequence("b"), this);
-  QObject::connect(decreaseFlaps, SIGNAL(activated()), this,
-      SLOT(OnDecreaseFlaps()));
+  // QShortcut *decreaseFlaps = new QShortcut(QKeySequence("b"), this);
+  // QObject::connect(decreaseFlaps, SIGNAL(activated()), this,
+  //     SLOT(OnDecreaseFlaps()));
 
-  QShortcut *increaseRoll = new QShortcut(QKeySequence(Qt::Key_Left), this);
-  QObject::connect(increaseRoll, SIGNAL(activated()), this,
-      SLOT(OnIncreaseRoll()));
+  // QShortcut *increaseRoll = new QShortcut(QKeySequence(Qt::Key_Left), this);
+  // QObject::connect(increaseRoll, SIGNAL(activated()), this,
+  //     SLOT(OnIncreaseRoll()));
 
-  QShortcut *decreaseRoll = new QShortcut(QKeySequence(Qt::Key_Right), this);
-  QObject::connect(decreaseRoll, SIGNAL(activated()), this,
-      SLOT(OnDecreaseRoll()));
+  // QShortcut *decreaseRoll = new QShortcut(QKeySequence(Qt::Key_Right), this);
+  // QObject::connect(decreaseRoll, SIGNAL(activated()), this,
+  //     SLOT(OnDecreaseRoll()));
 
-  QShortcut *increaseElevators =
-    new QShortcut(QKeySequence(Qt::Key_Down), this);
-  QObject::connect(increaseElevators, SIGNAL(activated()), this,
-      SLOT(OnIncreaseElevators()));
+  // QShortcut *increaseElevators =
+  //   new QShortcut(QKeySequence(Qt::Key_Down), this);
+  // QObject::connect(increaseElevators, SIGNAL(activated()), this,
+  //     SLOT(OnIncreaseElevators()));
 
-  QShortcut *decreaseElevators = new QShortcut(QKeySequence(Qt::Key_Up), this);
-  QObject::connect(decreaseElevators, SIGNAL(activated()), this,
-      SLOT(OnDecreaseElevators()));
+  // QShortcut *decreaseElevators = new QShortcut(QKeySequence(Qt::Key_Up), this);
+  // QObject::connect(decreaseElevators, SIGNAL(activated()), this,
+  //     SLOT(OnDecreaseElevators()));
 
-  QShortcut *increaseRudder = new QShortcut(QKeySequence("d"), this);
-  QObject::connect(increaseRudder, SIGNAL(activated()), this,
-      SLOT(OnIncreaseRudder()));
+  // QShortcut *increaseRudder = new QShortcut(QKeySequence("d"), this);
+  // QObject::connect(increaseRudder, SIGNAL(activated()), this,
+  //     SLOT(OnIncreaseRudder()));
 
-  QShortcut *decreaseRudder = new QShortcut(QKeySequence("a"), this);
-  QObject::connect(decreaseRudder, SIGNAL(activated()), this,
-      SLOT(OnDecreaseRudder()));
+  // QShortcut *decreaseRudder = new QShortcut(QKeySequence("a"), this);
+  // QObject::connect(decreaseRudder, SIGNAL(activated()), this,
+  //     SLOT(OnDecreaseRudder()));
 
-  QShortcut *presetTakeOff = new QShortcut(QKeySequence('1'), this);
-  QObject::connect(presetTakeOff, SIGNAL(activated()), this,
-      SLOT(OnPresetTakeOff()));
+  // QShortcut *presetTakeOff = new QShortcut(QKeySequence('1'), this);
+  // QObject::connect(presetTakeOff, SIGNAL(activated()), this,
+  //     SLOT(OnPresetTakeOff()));
 
-  QShortcut *presetCruise = new QShortcut(QKeySequence('2'), this);
-  QObject::connect(presetCruise, SIGNAL(activated()), this,
-      SLOT(OnPresetCruise()));
+  // QShortcut *presetCruise = new QShortcut(QKeySequence('2'), this);
+  // QObject::connect(presetCruise, SIGNAL(activated()), this,
+  //     SLOT(OnPresetCruise()));
 
-  QShortcut *presetLanding = new QShortcut(QKeySequence('3'), this);
-  QObject::connect(presetLanding, SIGNAL(activated()), this,
-      SLOT(OnPresetLanding()));
+  // QShortcut *presetLanding = new QShortcut(QKeySequence('3'), this);
+  // QObject::connect(presetLanding, SIGNAL(activated()), this,
+  //     SLOT(OnPresetLanding()));
 }
 
-/////////////////////////////////////////////////
-PlaneMILGUIPlugin::~PlaneMILGUIPlugin()
-{
-}
+// /////////////////////////////////////////////////
+// PlaneMILGUIPlugin::~PlaneMILGUIPlugin()
+// {
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnState(ConstCessnaPtr &_msg)
-{
-  std::lock_guard<std::mutex> lock(this->mutex);
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnState(ConstCessnaPtr &_msg)
+// {
+//   std::lock_guard<std::mutex> lock(this->mutex);
 
-  // Refresh the state.
-  this->state = *_msg;
-}
+//   // Refresh the state.
+//   this->state = *_msg;
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnIncreaseThrust()
-{
-  float thrust;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    thrust = this->state.cmd_propeller_speed();
-  }
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnIncreaseThrust()
+// {
+//   float thrust;
+//   {
+//     std::lock_guard<std::mutex> lock(this->mutex);
+//     thrust = this->state.cmd_propeller_speed();
+//   }
 
-  msgs::Cessna msg;
-  thrust = std::min(thrust + 0.1f, 1.0f);
-  msg.set_cmd_propeller_speed(thrust);
-  this->controlPub->Publish(msg);
-}
+//   msgs::Cessna msg;
+//   thrust = std::min(thrust + 0.1f, 1.0f);
+//   msg.set_cmd_propeller_speed(thrust);
+//   this->controlPub->Publish(msg);
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnDecreaseThrust()
-{
-  float thrust;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    thrust = this->state.cmd_propeller_speed();
-  }
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnDecreaseThrust()
+// {
+//   float thrust;
+//   {
+//     std::lock_guard<std::mutex> lock(this->mutex);
+//     thrust = this->state.cmd_propeller_speed();
+//   }
 
-  msgs::Cessna msg;
-  thrust = std::max(thrust - 0.1f, 0.0f);
-  msg.set_cmd_propeller_speed(thrust);
-  this->controlPub->Publish(msg);
-}
+//   msgs::Cessna msg;
+//   thrust = std::max(thrust - 0.1f, 0.0f);
+//   msg.set_cmd_propeller_speed(thrust);
+//   this->controlPub->Publish(msg);
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnIncreaseFlaps()
-{
-  ignition::math::Angle flap;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    flap.Radian(this->state.cmd_left_flap());
-  }
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnIncreaseFlaps()
+// {
+//   ignition::math::Angle flap;
+//   {
+//     std::lock_guard<std::mutex> lock(this->mutex);
+//     flap.Radian(this->state.cmd_left_flap());
+//   }
 
-  msgs::Cessna msg;
-  if (flap.Degree() < 30)
-  {
-    flap += this->angleStep;
-    msg.set_cmd_left_flap(flap.Radian());
-    msg.set_cmd_right_flap(flap.Radian());
-    this->controlPub->Publish(msg);
-  }
-}
+//   msgs::Cessna msg;
+//   if (flap.Degree() < 30)
+//   {
+//     flap += this->angleStep;
+//     msg.set_cmd_left_flap(flap.Radian());
+//     msg.set_cmd_right_flap(flap.Radian());
+//     this->controlPub->Publish(msg);
+//   }
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnDecreaseFlaps()
-{
-  ignition::math::Angle flap;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    flap.Radian(this->state.cmd_left_flap());
-  }
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnDecreaseFlaps()
+// {
+//   ignition::math::Angle flap;
+//   {
+//     std::lock_guard<std::mutex> lock(this->mutex);
+//     flap.Radian(this->state.cmd_left_flap());
+//   }
 
-  msgs::Cessna msg;
-  if (flap.Degree() > -30)
-  {
-    flap -= this->angleStep;
-    msg.set_cmd_left_flap(flap.Radian());
-    msg.set_cmd_right_flap(flap.Radian());
-    this->controlPub->Publish(msg);
-  }
-}
+//   msgs::Cessna msg;
+//   if (flap.Degree() > -30)
+//   {
+//     flap -= this->angleStep;
+//     msg.set_cmd_left_flap(flap.Radian());
+//     msg.set_cmd_right_flap(flap.Radian());
+//     this->controlPub->Publish(msg);
+//   }
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnIncreaseRoll()
-{
-  ignition::math::Angle aileron;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    aileron.Radian(this->state.cmd_left_aileron());
-  }
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnIncreaseRoll()
+// {
+//   ignition::math::Angle aileron;
+//   {
+//     std::lock_guard<std::mutex> lock(this->mutex);
+//     aileron.Radian(this->state.cmd_left_aileron());
+//   }
 
-  msgs::Cessna msg;
-  if (aileron.Degree() < 30)
-  {
-    aileron += this->angleStep;
-    msg.set_cmd_left_aileron(aileron.Radian());
-    msg.set_cmd_right_aileron(-aileron.Radian());
-    this->controlPub->Publish(msg);
-  }
-}
+//   msgs::Cessna msg;
+//   if (aileron.Degree() < 30)
+//   {
+//     aileron += this->angleStep;
+//     msg.set_cmd_left_aileron(aileron.Radian());
+//     msg.set_cmd_right_aileron(-aileron.Radian());
+//     this->controlPub->Publish(msg);
+//   }
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnDecreaseRoll()
-{
-  ignition::math::Angle aileron;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    aileron.Radian(this->state.cmd_left_aileron());
-  }
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnDecreaseRoll()
+// {
+//   ignition::math::Angle aileron;
+//   {
+//     std::lock_guard<std::mutex> lock(this->mutex);
+//     aileron.Radian(this->state.cmd_left_aileron());
+//   }
 
-  msgs::Cessna msg;
-  if (aileron.Degree() > -30)
-  {
-    aileron -= this->angleStep;
-    msg.set_cmd_left_aileron(aileron.Radian());
-    msg.set_cmd_right_aileron(-aileron.Radian());
-    this->controlPub->Publish(msg);
-  }
-}
+//   msgs::Cessna msg;
+//   if (aileron.Degree() > -30)
+//   {
+//     aileron -= this->angleStep;
+//     msg.set_cmd_left_aileron(aileron.Radian());
+//     msg.set_cmd_right_aileron(-aileron.Radian());
+//     this->controlPub->Publish(msg);
+//   }
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnIncreaseElevators()
-{
-  ignition::math::Angle elevators;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    elevators.Radian(this->state.cmd_elevators());
-  }
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnIncreaseElevators()
+// {
+//   ignition::math::Angle elevators;
+//   {
+//     std::lock_guard<std::mutex> lock(this->mutex);
+//     elevators.Radian(this->state.cmd_elevators());
+//   }
 
-  msgs::Cessna msg;
-  if (elevators.Degree() < 30)
-  {
-    elevators += this->angleStep;
-    msg.set_cmd_elevators(elevators.Radian());
-    this->controlPub->Publish(msg);
-  }
-}
+//   msgs::Cessna msg;
+//   if (elevators.Degree() < 30)
+//   {
+//     elevators += this->angleStep;
+//     msg.set_cmd_elevators(elevators.Radian());
+//     this->controlPub->Publish(msg);
+//   }
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnDecreaseElevators()
-{
-  ignition::math::Angle elevators;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    elevators.Radian(this->state.cmd_elevators());
-  }
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnDecreaseElevators()
+// {
+//   ignition::math::Angle elevators;
+//   {
+//     std::lock_guard<std::mutex> lock(this->mutex);
+//     elevators.Radian(this->state.cmd_elevators());
+//   }
 
-  msgs::Cessna msg;
-  if (elevators.Degree() > -30)
-  {
-    elevators -= this->angleStep;
-    msg.set_cmd_elevators(elevators.Radian());
-    this->controlPub->Publish(msg);
-  }
-}
+//   msgs::Cessna msg;
+//   if (elevators.Degree() > -30)
+//   {
+//     elevators -= this->angleStep;
+//     msg.set_cmd_elevators(elevators.Radian());
+//     this->controlPub->Publish(msg);
+//   }
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnIncreaseRudder()
-{
-  ignition::math::Angle rudder;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    rudder.Radian(this->state.cmd_rudder());
-  }
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnIncreaseRudder()
+// {
+//   ignition::math::Angle rudder;
+//   {
+//     std::lock_guard<std::mutex> lock(this->mutex);
+//     rudder.Radian(this->state.cmd_rudder());
+//   }
 
-  msgs::Cessna msg;
-  if (rudder.Degree() < 30)
-  {
-    rudder += this->angleStep;
-    msg.set_cmd_rudder(rudder.Radian());
-    this->controlPub->Publish(msg);
-  }
-}
+//   msgs::Cessna msg;
+//   if (rudder.Degree() < 30)
+//   {
+//     rudder += this->angleStep;
+//     msg.set_cmd_rudder(rudder.Radian());
+//     this->controlPub->Publish(msg);
+//   }
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnDecreaseRudder()
-{
-  ignition::math::Angle rudder;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    rudder.Radian(this->state.cmd_rudder());
-  }
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnDecreaseRudder()
+// {
+//   ignition::math::Angle rudder;
+//   {
+//     std::lock_guard<std::mutex> lock(this->mutex);
+//     rudder.Radian(this->state.cmd_rudder());
+//   }
 
-  msgs::Cessna msg;
-  if (rudder.Degree() > -30)
-  {
-    rudder -= this->angleStep;
-    msg.set_cmd_rudder(rudder.Radian());
-    this->controlPub->Publish(msg);
-  }
-}
+//   msgs::Cessna msg;
+//   if (rudder.Degree() > -30)
+//   {
+//     rudder -= this->angleStep;
+//     msg.set_cmd_rudder(rudder.Radian());
+//     this->controlPub->Publish(msg);
+//   }
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnPresetTakeOff()
-{
-  msgs::Cessna msg;
-  msg.set_cmd_propeller_speed(0.8);
-  msg.set_cmd_left_aileron(-0.017);
-  msg.set_cmd_right_aileron(0.017);
-  msg.set_cmd_left_flap(0);
-  msg.set_cmd_right_flap(0);
-  msg.set_cmd_elevators(0.033);
-  msg.set_cmd_rudder(-0.035);
-  this->controlPub->Publish(msg);
-}
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnPresetTakeOff()
+// {
+//   msgs::Cessna msg;
+//   msg.set_cmd_propeller_speed(0.8);
+//   msg.set_cmd_left_aileron(-0.017);
+//   msg.set_cmd_right_aileron(0.017);
+//   msg.set_cmd_left_flap(0);
+//   msg.set_cmd_right_flap(0);
+//   msg.set_cmd_elevators(0.033);
+//   msg.set_cmd_rudder(-0.035);
+//   this->controlPub->Publish(msg);
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnPresetCruise()
-{
-  msgs::Cessna msg;
-  msg.set_cmd_propeller_speed(0.6);
-  msg.set_cmd_left_aileron(0);
-  msg.set_cmd_right_aileron(0);
-  msg.set_cmd_left_flap(0);
-  msg.set_cmd_right_flap(0);
-  msg.set_cmd_elevators(0.12);
-  msg.set_cmd_rudder(-0.035);
-  this->controlPub->Publish(msg);
-}
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnPresetCruise()
+// {
+//   msgs::Cessna msg;
+//   msg.set_cmd_propeller_speed(0.6);
+//   msg.set_cmd_left_aileron(0);
+//   msg.set_cmd_right_aileron(0);
+//   msg.set_cmd_left_flap(0);
+//   msg.set_cmd_right_flap(0);
+//   msg.set_cmd_elevators(0.12);
+//   msg.set_cmd_rudder(-0.035);
+//   this->controlPub->Publish(msg);
+// }
 
-/////////////////////////////////////////////////
-void PlaneMILGUIPlugin::OnPresetLanding()
-{
-  msgs::Cessna msg;
-  msg.set_cmd_propeller_speed(0.3);
-  msg.set_cmd_left_aileron(0);
-  msg.set_cmd_right_aileron(0);
-  msg.set_cmd_left_flap(0);
-  msg.set_cmd_right_flap(0);
-  msg.set_cmd_elevators(0.16);
-  msg.set_cmd_rudder(-0.035);
-  this->controlPub->Publish(msg);
-}
+// /////////////////////////////////////////////////
+// void PlaneMILGUIPlugin::OnPresetLanding()
+// {
+//   msgs::Cessna msg;
+//   msg.set_cmd_propeller_speed(0.3);
+//   msg.set_cmd_left_aileron(0);
+//   msg.set_cmd_right_aileron(0);
+//   msg.set_cmd_left_flap(0);
+//   msg.set_cmd_right_flap(0);
+//   msg.set_cmd_elevators(0.16);
+//   msg.set_cmd_rudder(-0.035);
+//   this->controlPub->Publish(msg);
+// }

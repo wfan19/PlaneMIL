@@ -61,47 +61,47 @@ namespace gazebo
     /// \param[in] _msg State msg.
     private: void OnState(ConstCessnaPtr &_msg);
 
-    /// \brief Increase the propeller RPMs.
-    private slots: void OnIncreaseThrust();
+    // /// \brief Increase the propeller RPMs.
+    // private slots: void OnIncreaseThrust();
 
-    /// \brief Decrease the propeller RPMs.
-    private slots: void OnDecreaseThrust();
+    // /// \brief Decrease the propeller RPMs.
+    // private slots: void OnDecreaseThrust();
 
-    /// \brief Increase the flaps angle.
-    private slots: void OnIncreaseFlaps();
+    // /// \brief Increase the flaps angle.
+    // private slots: void OnIncreaseFlaps();
 
-    /// \brief Decrease the flaps angle.
-    private slots: void OnDecreaseFlaps();
+    // /// \brief Decrease the flaps angle.
+    // private slots: void OnDecreaseFlaps();
 
-    /// \brief Increase Roll.
-    private slots: void OnIncreaseRoll();
+    // /// \brief Increase Roll.
+    // private slots: void OnIncreaseRoll();
 
-    /// \brief Decrease Roll.
-    private slots: void OnDecreaseRoll();
+    // /// \brief Decrease Roll.
+    // private slots: void OnDecreaseRoll();
 
-    /// \brief Increase the elevators angle.
-    private slots: void OnIncreaseElevators();
+    // /// \brief Increase the elevators angle.
+    // private slots: void OnIncreaseElevators();
 
-    /// \brief Decrease the elevators angle.
-    private slots: void OnDecreaseElevators();
+    // /// \brief Decrease the elevators angle.
+    // private slots: void OnDecreaseElevators();
 
-    /// \brief Increase the rudder angle.
-    private slots: void OnIncreaseRudder();
+    // /// \brief Increase the rudder angle.
+    // private slots: void OnIncreaseRudder();
 
-    /// \brief Decrease the rudder angle.
-    private slots: void OnDecreaseRudder();
+    // /// \brief Decrease the rudder angle.
+    // private slots: void OnDecreaseRudder();
 
-    /// \brief Take-off preset.
-    private slots: void OnPresetTakeOff();
+    // /// \brief Take-off preset.
+    // private slots: void OnPresetTakeOff();
 
-    /// \brief Cruise preset.
-    private slots: void OnPresetCruise();
+    // /// \brief Cruise preset.
+    // private slots: void OnPresetCruise();
 
-    /// \brief Landing preset.
-    private slots: void OnPresetLanding();
+    // /// \brief Landing preset.
+    // private slots: void OnPresetLanding();
 
-    /// \brief SDF for this plugin.
-    private: sdf::ElementPtr sdf;
+    // /// \brief SDF for this plugin.
+    // private: sdf::ElementPtr sdf;
 
     /// \brief Pointer to a node for communication.
     private: transport::NodePtr gzNode;
@@ -112,14 +112,14 @@ namespace gazebo
     /// \brief State subscriber.
     private: transport::SubscriberPtr stateSub;
 
-    /// \brief Angle increment/decrement each time a key is pressed;
-    private: ignition::math::Angle angleStep;
+    // /// \brief Angle increment/decrement each time a key is pressed;
+    // private: ignition::math::Angle angleStep;
 
-    /// \brief State received from the PlaneMIL plugin.
-    private: msgs::Cessna state;
+    // /// \brief State received from the PlaneMIL plugin.
+    // private: msgs::Cessna state;
 
-    /// \brief Protection.
-    private: std::mutex mutex;
+    // /// \brief Protection.
+    // private: std::mutex mutex;
   };
 }
 
