@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-#include "gazebo_imu_plugin.h"
+#include "include/IMUPlugin.hh"
 
 #include <chrono>
 #include <cmath>
@@ -29,18 +29,18 @@
 
 namespace gazebo {
 
-GazeboImuPlugin::GazeboImuPlugin()
+IMUPlugin::IMUPlugin()
     : ModelPlugin(),
       velocity_prev_W_(0,0,0)
 {
 }
 
-GazeboImuPlugin::~GazeboImuPlugin() {
+IMUPlugin::~IMUPlugin() {
   updateConnection_->~Connection();
 }
 
 
-void GazeboImuPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
+void IMUPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
   // Store the pointer to the model
   model_ = _model;
   world_ = model_->GetWorld();
@@ -104,9 +104,9 @@ void GazeboImuPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
   // simulation iteration.
   this->updateConnection_ =
       event::Events::ConnectWorldUpdateBegin(
-          boost::bind(&GazeboImuPlugin::OnUpdate, this, _1));
+          boost::bind(&IMUPlugin::OnUpdate, this, _1));
 
-  imu_pub_ = node_handle_->Advertise<sensor_msgs::msgs::Imu>("~/" + model_->GetName() + imu_topic_, 10);
+  imu_pub_ = node_handle_->Advertise<sensor_msgs::msgs::IMU>("~/" + model_->GetName() + imu_topic_, 10);
 
   // Fill imu message.
   // imu_message_.header.frame_id = frame_id_; TODO Add header
@@ -186,7 +186,7 @@ void GazeboImuPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
 
 /// \brief This function adds noise to acceleration and angular rates for
 ///        accelerometer and gyroscope measurement simulation.
-void GazeboImuPlugin::addNoise(Eigen::Vector3d* linear_acceleration,
+void IMUPlugin::addNoise(Eigen::Vector3d* linear_acceleration,
                                Eigen::Vector3d* angular_velocity,
                                const double dt) {
   // CHECK(linear_acceleration);
@@ -241,7 +241,7 @@ void GazeboImuPlugin::addNoise(Eigen::Vector3d* linear_acceleration,
 }
 
 // This gets called by the world update start event.
-void GazeboImuPlugin::OnUpdate(const common::UpdateInfo& _info) {
+void IMUPlugin::OnUpdate(const common::UpdateInfo& _info) {
 #if GAZEBO_MAJOR_VERSION >= 9
   common::Time current_time  = world_->SimTime();
 #else
@@ -330,5 +330,5 @@ void GazeboImuPlugin::OnUpdate(const common::UpdateInfo& _info) {
 }
 
 
-GZ_REGISTER_MODEL_PLUGIN(GazeboImuPlugin);
+GZ_REGISTER_MODEL_PLUGIN(IMUPlugin);
 }

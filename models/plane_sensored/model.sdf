@@ -2,12 +2,46 @@
 <sdf version='1.5'>
    <model name="plane_sensored">
       <include>
-        <uri>model://plane</uri>
+        <uri>model://plane_base</uri>
       </include>
 
-      <plugin name='gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>
+      <link name='imu_link'>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>0.015</mass>
+          <inertia>
+            <ixx>1e-05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1e-05</iyy>
+            <iyz>0</iyz>
+            <izz>1e-05</izz>
+          </inertia>
+        </inertial>
+      </link>
+      <joint name='imu_joint' type='revolute'>
+        <child>imu_link</child>
+        <parent>plane_base::cessna_c172::body</parent>
+        <axis>
+          <xyz>1 0 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>0</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+
+      <plugin name='IMUPlugin' filename='./libIMUPlugin.so'>
         <robotNamespace></robotNamespace>
-        <linkName>plane/imu_link</linkName>
+        <linkName>imu_link</linkName>
         <imuTopic>/imu</imuTopic>
         <gyroscopeNoiseDensity>0.0003394</gyroscopeNoiseDensity>
         <gyroscopeRandomWalk>3.8785e-05</gyroscopeRandomWalk>
@@ -26,7 +60,7 @@
       </include>
 
       <joint name="lidar_joint" type="fixed">
-        <parent>cessna_c172::body</parent>
+        <parent>plane_base::cessna_c172::body</parent>
         <child>lidar::link</child>
       </joint>
 

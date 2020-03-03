@@ -33,9 +33,9 @@
 #include <gazebo/sensors/SensorTypes.hh>
 #include <gazebo/sensors/RaySensor.hh>
 
-#include <common.h>
+#include "common.hh"
 
-#include <Range.pb.h>
+#include "../build/Range.pb.h"
 
 namespace gazebo
 {

@@ -21,7 +21,7 @@
 #include <random>
 
 #include <Eigen/Core>
-#include "Imu.pb.h"
+#include "../build/IMU.pb.h"
 #include <gazebo/common/common.hh>
 #include <gazebo/common/Plugin.hh>
 #include <gazebo/gazebo.hh>
@@ -30,7 +30,7 @@
 #include "gazebo/transport/transport.hh"
 #include "gazebo/msgs/msgs.hh"
 
-#include "common.h"
+#include "common.hh"
 
 namespace gazebo {
 //typedef const boost::shared_ptr<const sensor_msgs::msgs::Imu> ImuPtr;
@@ -95,11 +95,11 @@ struct ImuParameters {
         gravity_magnitude(kDefaultGravityMagnitude) {}
 };
 
-class GazeboImuPlugin : public ModelPlugin {
+class IMUPlugin : public ModelPlugin {
  public:
 
-  GazeboImuPlugin();
-  ~GazeboImuPlugin();
+  IMUPlugin();
+  ~IMUPlugin();
 
   void InitializeParams();
   void Publish();
@@ -136,7 +136,7 @@ class GazeboImuPlugin : public ModelPlugin {
 
   common::Time last_time_;
 
-  sensor_msgs::msgs::Imu imu_message_;
+  sensor_msgs::msgs::IMU imu_message_;
 
   ignition::math::Vector3d gravity_W_;
   ignition::math::Vector3d velocity_prev_W_;

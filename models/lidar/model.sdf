@@ -47,7 +47,7 @@
             <stddev>0.02</stddev>
           </noise>
         </ray>
-        <plugin name="LaserPlugin" filename="libgazebo_lidar_plugin.so">
+        <plugin name="LaserPlugin" filename="./libLidarPlugin.so">
           <robotNamespace></robotNamespace>
           <min_distance>0.2</min_distance>
           <max_distance>60.0</max_distance>

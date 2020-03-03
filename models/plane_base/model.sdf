@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <sdf version='1.5'>
-   <model name="plane_sensored">
+   <model name="plane_base">
       <include>
         <uri>model://cessna</uri>
       </include>
@@ -16,7 +16,7 @@
       </link>
 
       <!-- Plugins for controlling the thrust and control surfaces -->
-      <plugin name="PlaneMIL_control" filename="./libPlaneMIL.so">
+      <plugin name="PlaneMIL_control" filename="./libPlaneMILPlugin.so">
         <propeller>cessna_c172::propeller_joint</propeller>
         <propeller_max_rpm>2500</propeller_max_rpm>
         <left_aileron>cessna_c172::left_aileron_joint</left_aileron>

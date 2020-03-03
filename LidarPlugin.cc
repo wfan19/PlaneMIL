@@ -19,7 +19,7 @@
  * Author: Nate Koenig mod by John Hsu
  */
 
-#include "gazebo_lidar_plugin.h"
+#include "include/LidarPlugin.hh"
 
 #include <chrono>
 #include <cmath>
@@ -27,7 +27,6 @@
 #include <memory>
 #include <stdio.h>
 #include <boost/algorithm/string.hpp>
-#include <common.h>
 
 using namespace gazebo;
 using namespace std;
@@ -66,7 +65,7 @@ void LidarPlugin::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
   if (_sdf->HasElement("robotNamespace"))
     namespace_ = _sdf->GetElement("robotNamespace")->Get<std::string>();
   else
-    gzwarn << "[gazebo_lidar_plugin] Please specify a robotNamespace.\n";
+    gzwarn << "[LidarPlugin] Please specify a robotNamespace.\n";
 
   // get minimum distance
   if (_sdf->HasElement("min_distance")) {
@@ -75,7 +74,7 @@ void LidarPlugin::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
       min_distance_ = kSensorMinDistance;
     }
   } else {
-    gzwarn << "[gazebo_lidar_plugin] Using default minimum distance: " << kDefaultMinDistance << "\n";
+    gzwarn << "[LidarPlugin] Using default minimum distance: " << kDefaultMinDistance << "\n";
     min_distance_ = kDefaultMinDistance;
   }
 
@@ -86,7 +85,7 @@ void LidarPlugin::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
       max_distance_ = kSensorMaxDistance;
     }
   } else {
-    gzwarn << "[gazebo_lidar_plugin] Using default maximum distance: " << kDefaultMaxDistance << "\n";
+    gzwarn << "[LidarPlugin] Using default maximum distance: " << kDefaultMaxDistance << "\n";
     max_distance_ = kDefaultMaxDistance;
   }
 
@@ -111,7 +110,7 @@ void LidarPlugin::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
   } else {
     // if not set by parameter, get the topic name from the model name
     lidar_topic_ = parentSensorModelName;
-    gzwarn << "[gazebo_lidar_plugin]: " + names_splitted.front() + "::" + names_splitted.rbegin()[1] +
+    gzwarn << "[LidarPlugin]: " + names_splitted.front() + "::" + names_splitted.rbegin()[1] +
       " using lidar topic \"" << parentSensorModelName << "\"\n";
   }
 
