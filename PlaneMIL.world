@@ -5,6 +5,8 @@
       <!-- A plugin for controlling the Cessna with the keyboard -->
       <plugin name="PlaneMIL_Keyboard" filename="./libPlaneMILGUIPlugin.so"/>
 
+      <plugin name="DashboardOverlay" filename="./libDashboardGUIPlugin.so"/>
+
       <camera name="user_camera">
         <pose>-16 0 4 0 0 0</pose>
       </camera>

@@ -36,7 +36,7 @@ foreach(ITR ${GAZEBO_INCLUDE_DIRS})
   endif()
 endforeach()
 
-set (msgs
+set (sensor_msgs
   msgs/IMU.proto
   msgs/Range.proto
   ${PROTOBUF_IMPORT_DIRS}/vector3d.proto
@@ -44,7 +44,7 @@ set (msgs
   ${PROTOBUF_IMPORT_DIRS}/header.proto
   ${PROTOBUF_IMPORT_DIRS}/time.proto
 )
-PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS ${msgs})
+PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS ${sensor_msgs})
 add_library(sensor_msgs SHARED ${PROTO_SRCS})
 link_libraries(sensor_msgs ${PROTOBUF_LIBRARY})
 
@@ -60,6 +60,7 @@ set (plugins
 
 set (gui_plugins
     PlaneMILGUIPlugin
+    DashboardGUIPlugin
 )
 
 # Build normal plugins
@@ -72,7 +73,7 @@ target_link_libraries(LidarPlugin Eigen3::Eigen)
 
 # Build GUI plugins
 foreach(gui_plugin ${gui_plugins})
-    add_library(${gui_plugin} SHARED ${headers_MOC} ${gui_plugin}.cc)
+    add_library(${gui_plugin} SHARED ${headers_MOC} GUI/${gui_plugin}.cc)
     target_link_libraries(${gui_plugin} ${GAZEBO_LIBRARIES}
         # ${OGRE_LIBRARIES}
         # ${OGRE-Terrain_LIBRARIES}
