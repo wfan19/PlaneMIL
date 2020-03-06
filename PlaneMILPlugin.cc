@@ -32,8 +32,6 @@ GZ_REGISTER_MODEL_PLUGIN(PlaneMILPlugin)
 ////////////////////////////////////////////////////////////////////////////////
 PlaneMILPlugin::PlaneMILPlugin()
 {
-
-  gzdbg << "Test message" << std::endl;
   this->cmds.fill(0.0f);
 
   // PID default parameters.

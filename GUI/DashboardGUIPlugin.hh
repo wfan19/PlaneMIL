@@ -15,10 +15,10 @@
 #include "../build/IMU.pb.h"
 #include "../build/Range.pb.h"
 
+#include "include/msgTypedefs.hh"
+
 namespace gazebo
 {
-    typedef const boost::shared_ptr<const sensor_msgs::msgs::IMU> IMUPtr;
-    typedef const boost::shared_ptr<const sensor_msgs::msgs::Range> RangePtr;
 
     class GAZEBO_VISIBLE DashboardGUIPlugin : public GUIPlugin
     {

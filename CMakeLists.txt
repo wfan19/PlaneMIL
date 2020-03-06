@@ -44,9 +44,18 @@ set (sensor_msgs
   ${PROTOBUF_IMPORT_DIRS}/header.proto
   ${PROTOBUF_IMPORT_DIRS}/time.proto
 )
-PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS ${sensor_msgs})
-add_library(sensor_msgs SHARED ${PROTO_SRCS})
-link_libraries(sensor_msgs ${PROTOBUF_LIBRARY})
+
+set (control_msgs
+  msgs/RC.proto
+)
+
+PROTOBUF_GENERATE_CPP(SENSOR_PROTO_SRCS SENSOR_PROTO_HDRS ${sensor_msgs})
+PROTOBUF_GENERATE_CPP(CONTROL_PROTO_SRCS CONTROL_PROTO_HDRS ${control_msgs})
+
+add_library(sensor_msgs SHARED ${SENSOR_PROTO_SRCS})
+add_library(control_msgs SHARED ${CONTROL_PROTO_SRCS})
+
+link_libraries(sensor_msgs control_msgs ${PROTOBUF_LIBRARY})
 
 
 # ------- #
