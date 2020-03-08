@@ -11,7 +11,7 @@
 #include "build/Range.pb.h"
 #include "build/RC.pb.h"
 
-#include "include/msgTypedefs.hh"
+#include "msgTypedefs.hh"
 
 namespace gazebo{
 
@@ -46,9 +46,6 @@ namespace gazebo{
 
         void publishSetpoints();
 
-        float pitchSP{0.0f}; // pitch setpoint radians
-        float rollSP{0.0f};  // roll setpoint radians
-
         transport::NodePtr node;
 
         transport::SubscriberPtr rangeSub;
@@ -61,6 +58,12 @@ namespace gazebo{
         sensor_msgs::msgs::Range lastRangeMsg;
         
         control_msgs::msgs::RC lastRCInputMsg;
+
+        gazebo::msgs::Vector3d headingOut;
+
+        const float ROLL_MAX{45.0f};
+        const float PITCH_MAX{45.0f};
+        const float YAW_MAX{15.0f}
     };
 } // namespace gazebo
 
