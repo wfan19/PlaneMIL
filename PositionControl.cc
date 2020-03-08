@@ -52,6 +52,7 @@ void PositionControl::run()
 {
     this->headingOut.set_x(this->getPitchSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg));
     this->headingOut.set_y(this->getRollSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg));
+    this->headingOut.set_z(0);
     this->headingSPPub->Publish(headingOut);
 }
 
