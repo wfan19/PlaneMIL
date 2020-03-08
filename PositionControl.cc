@@ -16,15 +16,10 @@ void PositionControl::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 {
     this->model = _model;
 
-        //TODO read PID values from SDF
-    float Kp_altitude = 0;
-    float Ki_altitude = 0;
-    float Kd_altitude = 0;
+    ignition::math::Vector3d altitude;
 
-    Kp_altitude = _sdf->Get<float>("Kp_altitude");
-    Ki_altitude = _sdf->Get<float>("Ki_altitude");
-    Kd_altitude = _sdf->Get<float>("Kd_altitude");
-    altitudePID.Init(Kp_altitude, Ki_altitude, Kd_altitude, 0, 0, PITCH_MAX, -PITCH_MAX);
+    altitude = _sdf->Get<ignition::math::Vector3d>("PID_altitude");
+    altitudePID.Init(altitude.X(), altitude.Y(), altitude.Z(), 0, 0, PITCH_MAX, -PITCH_MAX);
     altitudePID.SetCmd(0);
 
     lastUpdateTime = this->model->GetWorld()->SimTime();

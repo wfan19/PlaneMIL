@@ -100,23 +100,14 @@ void AttitudeControl::setControlYaw()
 
 void AttitudeControl::initPIDs(sdf::ElementPtr &_sdf)
 {
-    float Kp_pitch = 0;
-    float Ki_pitch = 0;
-    float Kd_pitch = 0;
+    ignition::math::Vector3d pitch, roll;
 
-    Kp_pitch = _sdf->Get<float>("Kp_pitch");
-    Ki_pitch = _sdf->Get<float>("Ki_pitch");
-    Kd_pitch = _sdf->Get<float>("Kd_pitch");
-    pitchPID.Init(Kp_pitch, Ki_pitch, Kd_pitch, 0, 0, 1, -1);
+    pitch = _sdf->Get<ignition::math::Vector3d>("PID_pitch");
+    roll = _sdf->Get<ignition::math::Vector3d>("PID_roll");
+    
+    pitchPID.Init(pitch.X(), pitch.Y(), pitch.Z(), 0, 0, 1, -1);
     pitchPID.SetCmd(0);
 
-    float Kp_roll = 0;
-    float Ki_roll = 0;
-    float Kd_roll = 0;
-
-    Kp_roll = _sdf->Get<float>("Kp_roll");
-    Ki_roll = _sdf->Get<float>("Ki_roll");
-    Kd_roll = _sdf->Get<float>("Kd_roll");
-    rollPID.Init(Kp_roll, Ki_roll, Kd_roll, 0, 0, 1, -1);
+    rollPID.Init(roll.X(), roll.Y(), roll.Z(), 0, 0, 1, -1);
     rollPID.SetCmd(0);
 }

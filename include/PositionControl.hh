@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <string>
+#include <vector>
 
 #include <gazebo/common/PID.hh>
 #include <gazebo/common/Plugin.hh>
