@@ -63,7 +63,7 @@ namespace gazebo{
 
         const float ROLL_MAX{45.0f};
         const float PITCH_MAX{45.0f};
-        const float YAW_MAX{15.0f}
+        const float YAW_MAX{15.0f};
     };
 } // namespace gazebo
 
