@@ -14,6 +14,21 @@ PositionControl::~PositionControl()
 
 void PositionControl::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 {
+    this->model = _model;
+
+        //TODO read PID values from SDF
+    float Kp_altitude = 0;
+    float Ki_altitude = 0;
+    float Kd_altitude = 0;
+
+    Kp_altitude = _sdf->Get<float>("Kp_altitude");
+    Ki_altitude = _sdf->Get<float>("Ki_altitude");
+    Kd_altitude = _sdf->Get<float>("Kd_altitude");
+    altitudePID.Init(Kp_altitude, Ki_altitude, Kd_altitude, 0, 0, 1, -1);
+    altitudePID.SetCmd(0);
+
+    lastUpdateTime = this->model->GetWorld()->SimTime();
+
     initConnection();
 }
 
@@ -33,12 +48,18 @@ void PositionControl::initConnection()
 void PositionControl::onIMU(IMUPtr &_imuMsg)
 {
     lastIMUMsg = *_imuMsg;
+    bodyQuaternion = ignition::math::Quaterniond(
+    lastIMUMsg.orientation().w(),
+    lastIMUMsg.orientation().x(),
+    lastIMUMsg.orientation().y(),
+    lastIMUMsg.orientation().z());
     this->run();
 }
 
 void PositionControl::onRange(RangePtr &_rangeMsg)
 {
     lastRangeMsg = *_rangeMsg;
+    lastAltitude = this->lastRangeMsg.current_distance() * std::cos(this->bodyQuaternion.Roll()) * std::cos(this->bodyQuaternion.Pitch());
     this->run();
 }
 
@@ -50,25 +71,26 @@ void PositionControl::onRC(RCPtr &_rcMsg)
 
 void PositionControl::run()
 {
-    this->headingOut.set_x(this->getPitchSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg));
-    this->headingOut.set_y(this->getRollSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg));
+    this->headingOut.set_x(this->getPitchSP());
+    this->headingOut.set_y(this->getRollSP());
     this->headingOut.set_z(0);
     this->headingSPPub->Publish(headingOut);
 }
 
-float PositionControl::getPitchSP(control_msgs::msgs::RC rcMsg, 
-                        sensor_msgs::msgs::IMU imuMsg, 
-                        sensor_msgs::msgs::Range rangeMsg)
+float PositionControl::getPitchSP()
 {
-    return 0;
+    float altitudeTarget, error, pitchSP;
+    pitchSP = 0;
+    altitudeTarget = lastRCInputMsg.altitude();
+    error = altitudeTarget - lastAltitude;
+
+    return pitchSP;
 }
 
-float PositionControl::getRollSP(control_msgs::msgs::RC rcMsg, 
-                        sensor_msgs::msgs::IMU imuMsg, 
-                        sensor_msgs::msgs::Range rangeMsg)
+float PositionControl::getRollSP()
 {
     float out;
-    out = -std::atan(imuMsg.linear_acceleration().y() / 9.80665f); //angle of force to counter
-    out += rcMsg.roll();
+    out = -std::atan(lastIMUMsg.linear_acceleration().y() / 9.80665f); //angle of force to counter
+    out = lastRCInputMsg.roll();
     return out;
 }

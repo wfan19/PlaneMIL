@@ -4,9 +4,12 @@
 #include <cmath>
 #include <string>
 
+#include <gazebo/common/PID.hh>
 #include <gazebo/common/Plugin.hh>
 #include <gazebo/msgs/msgs.hh>
 #include <gazebo/transport/transport.hh>
+#include <gazebo/physics/Model.hh>
+#include <gazebo/physics/physics.hh>
 
 #include "../build/IMU.pb.h"
 #include "../build/Range.pb.h"
@@ -37,13 +40,12 @@ namespace gazebo{
 
         void run();
 
-        float getPitchSP(control_msgs::msgs::RC rcMsg, 
-                            sensor_msgs::msgs::IMU imuMsg, 
-                            sensor_msgs::msgs::Range rangeMsg);
+        float getPitchSP();
 
-        float getRollSP(control_msgs::msgs::RC rcMsg, 
-                            sensor_msgs::msgs::IMU imuMsg, 
-                            sensor_msgs::msgs::Range rangeMsg);
+        float getRollSP();
+
+        gazebo::common::Time lastUpdateTime;
+        gazebo::physics::ModelPtr model;
 
         transport::NodePtr node;
 
@@ -59,6 +61,12 @@ namespace gazebo{
         control_msgs::msgs::RC lastRCInputMsg;
 
         gazebo::msgs::Vector3d headingOut;
+
+        gazebo::common::PID altitudePID;
+
+        ignition::math::Quaterniond bodyQuaternion;
+
+        float lastAltitude{0.0f};
 
         const float ROLL_MAX{45.0f};
         const float PITCH_MAX{45.0f};
