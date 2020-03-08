@@ -42,7 +42,6 @@ void DashboardGUIPlugin::initUI()
     frameLayout->addWidget(altitudeValue);
     connect(this, SIGNAL(setAltitude(QString)), altitudeValue, SLOT(setText(QString)), Qt::QueuedConnection);
 
-    frameLayout->addWidget(headingTitle);
     frameLayout->addWidget(headingValue);
     connect(this, SIGNAL(setHeading(QString)), headingValue, SLOT(setText(QString)), Qt::QueuedConnection);
 
@@ -111,8 +110,8 @@ std::string DashboardGUIPlugin::formatHeading()
     stream << std::setw(2) << std::setfill('0') << " Roll: " << floorf(this->bodyQuaterniond.Roll() * 360 / 6.28 * 100) / 100;
     stream << std::setw(2) << std::setfill('0') << " Yaw: " << floorf(this->bodyQuaterniond.Yaw() * 360 / 6.28 *100) / 100;
 
-    stream << std::setw(2) << std::setfill('0') << " Ax: " << this->lastIMUMsg.linear_acceleration[0];
-    stream << std::setw(2) << std::setfill('0') << " Ay: " << this->lastIMUMsg.linear_acceleration[1];
-    stream << std::setw(2) << std::setfill('0') << " Az: " << this->lastIMUMsg.linear_acceleration[2];
+    // stream << std::setw(2) << std::setfill('0') << " Ax: " << floorf(this->lastIMUMsg.linear_acceleration().x() * 100)/100;
+    // stream << std::setw(2) << std::setfill('0') << " Ay: " << floorf(this->lastIMUMsg.linear_acceleration().y() * 100)/100;
+    // stream << std::setw(2) << std::setfill('0') << " Az: " << floorf(this->lastIMUMsg.linear_acceleration().z() * 100)/100;
     return stream.str();
 }

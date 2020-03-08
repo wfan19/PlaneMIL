@@ -56,13 +56,12 @@
       <!--lidar-->
       <include>
         <uri>model://lidar</uri>
-        <pose>0 0 -0.05 0 0 0</pose>
+        <pose>0 0 0.5 0 0 0</pose>
       </include>
 
       <joint name="lidar_joint" type="fixed">
         <parent>plane_base::cessna_c172::body</parent>
         <child>lidar::link</child>
       </joint>
-
     </model>
 </sdf>
