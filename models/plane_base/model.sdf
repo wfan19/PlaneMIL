@@ -142,5 +142,10 @@
         <control_joint_name>cessna_c172::rudder_joint</control_joint_name>
         <control_joint_rad_to_cl>4.0</control_joint_rad_to_cl>
       </plugin>
+
+      <!-- Plane control plugins added by Bill -->
+      <plugin name="PositionControl" filename="./lilbPositionControl.so"/>
+      <plugin name="AttitudeControl" filename="./libAttitudeControl.so"/>
+
     </model>
 </sdf>
