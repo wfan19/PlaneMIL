@@ -46,8 +46,8 @@ void PositionControl::onRC(RCPtr &_rcMsg)
 
 void PositionControl::run()
 {
-    pitchSP = this->getPitchSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg);
-    rollSP = this->getRollSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg);
+    this->headingOut.set_x(this->getPitchSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg));
+    this->headingOut.set_y(this->getRollSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg));
     this->publishSetpoints();
 }
 
@@ -55,7 +55,10 @@ float PositionControl::getPitchSP(control_msgs::msgs::RC rcMsg,
                         sensor_msgs::msgs::IMU imuMsg, 
                         sensor_msgs::msgs::Range rangeMsg)
 {
-    return 0;
+    float out;
+    out = std::atan(imuMsg.linear_acceleration.y / 9.80665f); //angle of force to counter
+    out += rcMsg.roll();
+    return out;
 }
 
 float PositionControl::getRollSP(control_msgs::msgs::RC rcMsg, 
@@ -66,7 +69,7 @@ float PositionControl::getRollSP(control_msgs::msgs::RC rcMsg,
 }
 
 
-void publishSetpoints()
+void PositionControl::publishSetpoints()
 {
-
+    this->headingSPPub->Publish(headingOut);
 }
