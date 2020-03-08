@@ -17,14 +17,14 @@ void AttitudeControl::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
     initConnection();
 
     //TODO read PID values from SDF
-    float Kp = 0;
-    float Ki = 0;
-    float Kd = 0;
+    float Kp_roll = 0;
+    float Ki_roll = 0;
+    float Kd_roll = 0;
 
-    Kp = _sdf->Get<float>("Kp");
-    Ki = _sdf->Get<float>("Ki");
-    Kd = _sdf->Get<float>("Kd");
-    rollPID.Init(Kp, Ki, Kd, 0, 0, 1, -1);
+    Kp_roll = _sdf->Get<float>("Kp_roll");
+    Ki_roll = _sdf->Get<float>("Ki_roll");
+    Kd_roll = _sdf->Get<float>("Kd_roll");
+    rollPID.Init(Kp_roll, Ki_roll, Kd_roll, 0, 0, 1, -1);
     rollPID.SetCmd(0);
     
     this->model = _model;
