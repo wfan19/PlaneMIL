@@ -25,9 +25,9 @@ void PositionControl::initConnection()
 
     this->rangeSub = this->node->Subscribe("~/plane/link/lidar", &PositionControl::onRange, this);
     this->imuSub = this->node->Subscribe("~/plane/imu", &PositionControl::onIMU, this);
-    this->rcSub = this->node->Subscribe("~/plane/control/rc", &PositionControl::onRC, this);
+    this->rcSub = this->node->Subscribe("~/plane/rc", &PositionControl::onRC, this);
 
-    this->headingSPPub = this->node->Advertise<gazebo::msgs::Vector3d>("~/plane/control/headingSP");
+    this->headingSPPub = this->node->Advertise<gazebo::msgs::Vector3d>("~/plane/headingSP");
 }
 
 void PositionControl::onIMU(IMUPtr &_imuMsg)
