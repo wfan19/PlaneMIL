@@ -41,6 +41,8 @@ PlaneMILGUIPlugin::PlaneMILGUIPlugin()
   this->gzNode->Init();
   this->controlPub =
     this->gzNode->Advertise<msgs::Cessna>("~/plane/control");
+  this->RCPub = this->gzNode->Advertise<control_msgs::msgs::RC>("~/plane/rc");
+
   this->stateSub = this->gzNode->Subscribe<msgs::Cessna>(
     "~/plane/state", &PlaneMILGUIPlugin::OnState, this);
 

@@ -11,9 +11,9 @@
 #include <gazebo/msgs/msgs.hh>
 #include <gazebo/transport/transport.hh>
 
-#include "include/msgTypedefs.hh"
+#include "msgTypedefs.hh"
 
-#include "build/IMU.pb.h"
+#include "../build/IMU.pb.h"
 
 namespace gazebo{
     class GZ_PLUGIN_VISIBLE AttitudeControl : public ModelPlugin{
