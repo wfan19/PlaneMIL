@@ -7,9 +7,9 @@
 #include <gazebo/msgs/msgs.hh>
 #include <gazebo/transport/transport.hh>
 
-#include "build/IMU.pb.h"
-#include "build/Range.pb.h"
-#include "build/RC.pb.h"
+#include "../build/IMU.pb.h"
+#include "../build/Range.pb.h"
+#include "../build/RC.pb.h"
 
 #include "msgTypedefs.hh"
 
@@ -43,7 +43,7 @@ namespace gazebo{
         float getRollSP(control_msgs::msgs::RC rcMsg, 
                             sensor_msgs::msgs::IMU imuMsg, 
                             sensor_msgs::msgs::Range rangeMsg);
-                            
+
         transport::NodePtr node;
 
         transport::SubscriberPtr rangeSub;

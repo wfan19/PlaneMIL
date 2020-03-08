@@ -31,13 +31,14 @@ void AttitudeControl::initConnection()
     this->node = transport::NodePtr(new transport::Node());
     this->node->Init("default");
 
+    // this->headingSPSub = this->node->Subscribe("~/plane/headingSP", &AttitudeControl::onHeadingSP, this);
     this->headingSPSub = this->node->Subscribe("~/plane/headingSP", &AttitudeControl::onHeadingSP, this);
     this->imuSub = this->node->Subscribe("~/plane/imu", &AttitudeControl::onIMU, this);
 
     this->attitudeCtrlPub = this->node->Advertise<gazebo::msgs::Vector3d>("~/plane/control");
 }
 
-void AttitudeControl::onHeadingSP(gazebo::msgs::Vector3dPtr &_headingSP)
+void AttitudeControl::onHeadingSP(ConstVector3dPtr &_headingSP)
 {
     lastHeadingSP = *_headingSP;
     run();

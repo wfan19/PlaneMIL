@@ -11,6 +11,9 @@
 #include <gazebo/msgs/msgs.hh>
 #include <gazebo/transport/transport.hh>
 
+#include <gazebo/physics/Model.hh>
+#include <gazebo/physics/physics.hh>
+
 #include "msgTypedefs.hh"
 
 #include "../build/IMU.pb.h"
@@ -27,7 +30,7 @@ namespace gazebo{
     private:
         void initConnection();
 
-        void onHeadingSP(gazebo::msgs::Vector3dPtr &_headingSP);
+        void onHeadingSP(ConstVector3dPtr &_headingSP);
         void onIMU(IMUPtr &_imuMsg);
 
         void run();
