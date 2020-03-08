@@ -39,6 +39,8 @@ namespace gazebo{
         void setControlRoll();
         void setControlYaw();
 
+        void initPIDs(sdf::ElementPtr &_sdf);
+
         transport::NodePtr node;
 
         transport::SubscriberPtr headingSPSub;
