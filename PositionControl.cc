@@ -71,5 +71,4 @@ float PositionControl::getRollSP(control_msgs::msgs::RC rcMsg,
     out = -std::atan(imuMsg.linear_acceleration().y() / 9.80665f); //angle of force to counter
     out += rcMsg.roll();
     return out;
-    // return 0;
 }

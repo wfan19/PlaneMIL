@@ -15,6 +15,7 @@
  *
 */
 #include <algorithm>
+#include <string>
 
 #include <gazebo/gui/GuiPlugin.hh>
 #include <gazebo/gui/Actions.hh>
@@ -167,25 +168,20 @@ void PlaneMILGUIPlugin::OnIncreaseFlaps()
 /////////////////////////////////////////////////
 void PlaneMILGUIPlugin::OnDecreaseFlaps()
 {
-  // ignition::math::Angle flap;
-  // {
-  //   std::lock_guard<std::mutex> lock(this->mutex);
-  //   flap.Radian(this->state.cmd_left_flap());
-  // }
+  ignition::math::Angle flap;
+  {
+    std::lock_guard<std::mutex> lock(this->mutex);
+    flap.Radian(this->state.cmd_left_flap());
+  }
 
-  // msgs::Cessna msg;
-  // if (flap.Degree() > -30)
-  // {
-  //   flap -= this->angleStep;
-  //   msg.set_cmd_left_flap(flap.Radian());
-  //   msg.set_cmd_right_flap(flap.Radian());
-  //   this->controlPub->Publish(msg);
-  // }
-
-  control_msgs::msgs::RC ctrlMsg;
-  rollAngle -= 3.14/12;
-  ctrlMsg.set_roll(this->rollAngle);
-  this->RCPub->Publish(ctrlMsg);
+  msgs::Cessna msg;
+  if (flap.Degree() > -30)
+  {
+    flap -= this->angleStep;
+    msg.set_cmd_left_flap(flap.Radian());
+    msg.set_cmd_right_flap(flap.Radian());
+    this->controlPub->Publish(msg);
+  }
 }
 
 /////////////////////////////////////////////////
@@ -205,30 +201,44 @@ void PlaneMILGUIPlugin::OnIncreaseRoll()
   //   msg.set_cmd_right_aileron(-aileron.Radian());
   //   this->controlPub->Publish(msg);
   // }
-
   control_msgs::msgs::RC ctrlMsg;
-  rollAngle += 3.14/12;
+  rollAngle -= 3.14/48;
+  ctrlMsg.set_time_usec(0);
+  ctrlMsg.set_altitude(0);
+  ctrlMsg.set_pitch(0);
   ctrlMsg.set_roll(this->rollAngle);
+  ctrlMsg.set_yaw(0);
   this->RCPub->Publish(ctrlMsg);
+  gzlog << "onIncreaseRoll, new roll sp offset: " << rollAngle << std::endl;
 }
 
 /////////////////////////////////////////////////
 void PlaneMILGUIPlugin::OnDecreaseRoll()
 {
-  ignition::math::Angle aileron;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    aileron.Radian(this->state.cmd_left_aileron());
-  }
+  // ignition::math::Angle aileron;
+  // {
+  //   std::lock_guard<std::mutex> lock(this->mutex);
+  //   aileron.Radian(this->state.cmd_left_aileron());
+  // }
 
-  msgs::Cessna msg;
-  if (aileron.Degree() > -30)
-  {
-    aileron -= this->angleStep;
-    msg.set_cmd_left_aileron(aileron.Radian());
-    msg.set_cmd_right_aileron(-aileron.Radian());
-    this->controlPub->Publish(msg);
-  }
+  // msgs::Cessna msg;
+  // if (aileron.Degree() > -30)
+  // {
+  //   aileron -= this->angleStep;
+  //   msg.set_cmd_left_aileron(aileron.Radian());
+  //   msg.set_cmd_right_aileron(-aileron.Radian());
+  //   this->controlPub->Publish(msg);
+  // }
+
+  control_msgs::msgs::RC ctrlMsg;
+  rollAngle += 3.14/48;
+  ctrlMsg.set_time_usec(0);
+  ctrlMsg.set_altitude(0);
+  ctrlMsg.set_pitch(0);
+  ctrlMsg.set_roll(this->rollAngle);
+  ctrlMsg.set_yaw(0);
+  this->RCPub->Publish(ctrlMsg);
+  gzlog << "onDecreaseRoll, new roll sp offset: " << rollAngle << std::endl;
 }
 
 /////////////////////////////////////////////////
