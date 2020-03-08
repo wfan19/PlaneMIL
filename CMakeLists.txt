@@ -65,6 +65,8 @@ set (plugins
     IMUPlugin
     LidarPlugin
     PlaneMILPlugin
+    PositionControl
+    AttitudeControl
 )
 
 set (gui_plugins
