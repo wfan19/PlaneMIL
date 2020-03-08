@@ -1,6 +1,8 @@
 #ifndef POSITION_CONTROLHH
 #define POSITION_CONTROLHH
 
+#include <cmath>
+
 #include <gazebo/common/Plugin.hh>
 #include <gazebo/msgs/msgs.hh>
 #include <gazebo/transport/transport.hh>
@@ -34,9 +36,13 @@ namespace gazebo{
 
         void run();
 
-        float getPitchSP(sensor_msgs::msgs::IMU imuMsg, sensor_msgs::msgs::Range rangeMsg);
+        float getPitchSP(control_msgs::msgs::RC rcMsg, 
+                            sensor_msgs::msgs::IMU imuMsg, 
+                            sensor_msgs::msgs::Range rangeMsg);
 
-        float getRollSP(sensor_msgs::msgs::IMU imuMsg, sensor_msgs::msgs::Range rangeMsg);
+        float getRollSP(control_msgs::msgs::RC rcMsg, 
+                            sensor_msgs::msgs::IMU imuMsg, 
+                            sensor_msgs::msgs::Range rangeMsg);
 
         void publishSetpoints();
 

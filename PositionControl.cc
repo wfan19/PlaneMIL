@@ -46,17 +46,21 @@ void PositionControl::onRC(RCPtr &_rcMsg)
 
 void PositionControl::run()
 {
-    pitchSP = this->getPitchSP(lastIMUMsg, lastRangeMsg);
-    rollSP = this->getRollSP(lastIMUMsg, lastRangeMsg);
+    pitchSP = this->getPitchSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg);
+    rollSP = this->getRollSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg);
     this->publishSetpoints();
 }
 
-float PositionControl::getPitchSP(sensor_msgs::msgs::IMU imuMsg, sensor_msgs::msgs::Range rangeMsg)
+float PositionControl::getPitchSP(control_msgs::msgs::RC rcMsg, 
+                        sensor_msgs::msgs::IMU imuMsg, 
+                        sensor_msgs::msgs::Range rangeMsg)
 {
     return 0;
 }
 
-float PositionControl::getRollSP(sensor_msgs::msgs::IMU imuMsg, sensor_msgs::msgs::Range rangeMsg)
+float PositionControl::getRollSP(control_msgs::msgs::RC rcMsg, 
+                        sensor_msgs::msgs::IMU imuMsg, 
+                        sensor_msgs::msgs::Range rangeMsg)
 {
     return 0;
 }

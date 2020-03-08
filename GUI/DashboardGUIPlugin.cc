@@ -33,12 +33,7 @@ void DashboardGUIPlugin::initUI()
     altitudeValue->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     altitudeValue->setFixedSize(50,40);
 
-
-
-    QLabel *headingTitle = new QLabel(tr("Heading: "));
     QLabel *headingValue = new QLabel(tr(""));
-    headingTitle->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    headingTitle->setFixedSize(50,40);
     headingValue->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     headingValue->setFixedSize(400,40);
 
@@ -112,8 +107,12 @@ std::string DashboardGUIPlugin::formatHeading()
     std::ostringstream stream;
     stream.str("");
 
-    stream << std::setw(2) << std::setfill('0') << " Roll: " << floorf(this->bodyQuaterniond.Roll() * 360 / 6.28 * 100) / 100;
     stream << std::setw(2) << std::setfill('0') << " Pitch: " << floorf(this->bodyQuaterniond.Pitch() * 360 / 6.28 *100) / 100;
+    stream << std::setw(2) << std::setfill('0') << " Roll: " << floorf(this->bodyQuaterniond.Roll() * 360 / 6.28 * 100) / 100;
     stream << std::setw(2) << std::setfill('0') << " Yaw: " << floorf(this->bodyQuaterniond.Yaw() * 360 / 6.28 *100) / 100;
+
+    stream << std::setw(2) << std::setfill('0') << " Ax: " << this->lastIMUMsg.linear_acceleration[0];
+    stream << std::setw(2) << std::setfill('0') << " Ay: " << this->lastIMUMsg.linear_acceleration[1];
+    stream << std::setw(2) << std::setfill('0') << " Az: " << this->lastIMUMsg.linear_acceleration[2];
     return stream.str();
 }

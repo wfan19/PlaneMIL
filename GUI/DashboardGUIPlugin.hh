@@ -15,7 +15,7 @@
 #include "../build/IMU.pb.h"
 #include "../build/Range.pb.h"
 
-#include "include/msgTypedefs.hh"
+#include "../include/msgTypedefs.hh"
 
 namespace gazebo
 {

@@ -6,6 +6,7 @@ message RC
 {
   required int64 time_usec                    = 1;
   required float altitude                     = 2;
-  required float roll                         = 3;
-  required float yaw                          = 4;
+  required float pitch                        = 3;
+  required float roll                         = 4;
+  required float yaw                          = 5;
 }
