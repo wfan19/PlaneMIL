@@ -144,7 +144,7 @@
       </plugin>
 
       <!-- Plane control plugins added by Bill -->
-      <plugin name="PositionControl" filename="./lilbPositionControl.so"/>
+      <plugin name="PositionControl" filename="./libPositionControl.so"/>
       <plugin name="AttitudeControl" filename="./libAttitudeControl.so"/>
 
     </model>
