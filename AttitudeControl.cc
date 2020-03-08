@@ -35,7 +35,7 @@ void AttitudeControl::initConnection()
     this->headingSPSub = this->node->Subscribe("~/plane/headingSP", &AttitudeControl::onHeadingSP, this);
     this->imuSub = this->node->Subscribe("~/plane/imu", &AttitudeControl::onIMU, this);
 
-    this->attitudeCtrlPub = this->node->Advertise<gazebo::msgs::Vector3d>("~/plane/control");
+    this->attitudeCtrlPub = this->node->Advertise<gazebo::msgs::Cessna>("~/plane/control");
 }
 
 void AttitudeControl::onHeadingSP(ConstVector3dPtr &_headingSP)
@@ -79,6 +79,8 @@ void AttitudeControl::setControlRoll()
     double angleTarget = this->AILERON_LIMIT * this->rollPID.Update(error, dt); // Get target angle on a scale from -1 to 1, and then scale by limit
     this->ctrlMsg.set_cmd_left_aileron(angleTarget);
     this->ctrlMsg.set_cmd_right_aileron(-angleTarget);
+
+    this->attitudeCtrlPub->Publish(ctrlMsg);
 }
 
 void AttitudeControl::setControlYaw()
