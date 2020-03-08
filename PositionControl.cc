@@ -24,7 +24,7 @@ void PositionControl::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
     Kp_altitude = _sdf->Get<float>("Kp_altitude");
     Ki_altitude = _sdf->Get<float>("Ki_altitude");
     Kd_altitude = _sdf->Get<float>("Kd_altitude");
-    altitudePID.Init(Kp_altitude, Ki_altitude, Kd_altitude, 0, 0, 1, -1);
+    altitudePID.Init(Kp_altitude, Ki_altitude, Kd_altitude, 0, 0, PITCH_MAX, -PITCH_MAX);
     altitudePID.SetCmd(0);
 
     lastUpdateTime = this->model->GetWorld()->SimTime();
@@ -80,9 +80,15 @@ void PositionControl::run()
 float PositionControl::getPitchSP()
 {
     float altitudeTarget, error, pitchSP;
+    gazebo::common::Time currentTime;
+
     pitchSP = 0;
     altitudeTarget = lastRCInputMsg.altitude();
     error = altitudeTarget - lastAltitude;
+    currentTime = model->GetWorld()->SimTime();
+
+    pitchSP = altitudePID.Update(error, currentTime - lastUpdateTime);
+    lastUpdateTime = currentTime;
 
     return pitchSP;
 }

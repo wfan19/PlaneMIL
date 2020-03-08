@@ -68,9 +68,9 @@ namespace gazebo{
 
         float lastAltitude{0.0f};
 
-        const float ROLL_MAX{45.0f};
-        const float PITCH_MAX{45.0f};
-        const float YAW_MAX{15.0f};
+        const float PITCH_MAX{30.0f * 3.14 / 180};
+        const float ROLL_MAX{30.0f * 3.14 / 180};
+        const float YAW_MAX{15.0f * 3.14 / 180};
     };
 } // namespace gazebo
 
