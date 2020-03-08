@@ -6,11 +6,15 @@ GZ_REGISTER_MODEL_PLUGIN(PositionControl);
 
 PositionControl::PositionControl()
 {
-    initConnection();
 }
 
 PositionControl::~PositionControl()
 {
+}
+
+void PositionControl::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
+{
+    initConnection();
 }
 
 void PositionControl::initConnection()
@@ -21,7 +25,7 @@ void PositionControl::initConnection()
 
     this->rangeSub = this->node->Subscribe("~/plane/link/lidar", &PositionControl::onRange, this);
     this->imuSub = this->node->Subscribe("~/plane/imu", &PositionControl::onIMU, this);
-    this->rcSub = this->node->Subscribe("~/plane/rc", &PositionControl::onRC, this);
+    this->rcSub = this->node->Subscribe("~/plane/control/rc", &PositionControl::onRC, this);
 
     this->headingSPPub = this->node->Advertise<gazebo::msgs::Vector3d>("~/plane/control/headingSP");
 }
@@ -48,7 +52,7 @@ void PositionControl::run()
 {
     this->headingOut.set_x(this->getPitchSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg));
     this->headingOut.set_y(this->getRollSP(lastRCInputMsg, lastIMUMsg, lastRangeMsg));
-    this->publishSetpoints();
+    this->headingSPPub->Publish(headingOut);
 }
 
 float PositionControl::getPitchSP(control_msgs::msgs::RC rcMsg, 
@@ -66,10 +70,4 @@ float PositionControl::getRollSP(control_msgs::msgs::RC rcMsg,
     out = std::atan(imuMsg.linear_acceleration.y / 9.80665f); //angle of force to counter
     out += rcMsg.roll();
     return out;
-}
-
-
-void PositionControl::publishSetpoints()
-{
-    this->headingSPPub->Publish(headingOut);
 }

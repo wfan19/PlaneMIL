@@ -43,9 +43,7 @@ namespace gazebo{
         float getRollSP(control_msgs::msgs::RC rcMsg, 
                             sensor_msgs::msgs::IMU imuMsg, 
                             sensor_msgs::msgs::Range rangeMsg);
-
-        void publishSetpoints();
-
+                            
         transport::NodePtr node;
 
         transport::SubscriberPtr rangeSub;
