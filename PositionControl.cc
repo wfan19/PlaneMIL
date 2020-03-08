@@ -79,6 +79,7 @@ float PositionControl::getPitchSP()
 
     pitchSP = 0;
     altitudeTarget = lastRCInputMsg.altitude();
+
     error = altitudeTarget - lastAltitude;
     currentTime = model->GetWorld()->SimTime();
 

@@ -254,7 +254,10 @@ void PlaneMILGUIPlugin::OnIncreaseElevators()
   //   this->controlPub->Publish(msg);
   // }
 
-  this->altitude -= 1.5;
+  this->altitude += 1.5;
+  if(altitude > 40) {
+    altitude = 40;
+  }
   this->ctrlMsg.set_altitude(this->altitude);
   this->RCPub->Publish(this->ctrlMsg);
   gzdbg << "onIncreaseElevators, new altitude sp offset: " << altitude << std::endl;
@@ -277,7 +280,10 @@ void PlaneMILGUIPlugin::OnDecreaseElevators()
   //   this->controlPub->Publish(msg);
   // }
 
-  this->altitude += 1.5;
+  this->altitude -= 1.5;
+  if(altitude < 0){
+    altitude = 0;
+  }
   this->ctrlMsg.set_altitude(this->altitude);
   this->RCPub->Publish(this->ctrlMsg);
   gzdbg << "onDecreaseElevators, new altitude sp offset: " << altitude << std::endl;
