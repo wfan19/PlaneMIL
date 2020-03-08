@@ -2,6 +2,7 @@
 #define POSITION_CONTROLHH
 
 #include <cmath>
+#include <string>
 
 #include <gazebo/common/Plugin.hh>
 #include <gazebo/msgs/msgs.hh>

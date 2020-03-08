@@ -167,39 +167,49 @@ void PlaneMILGUIPlugin::OnIncreaseFlaps()
 /////////////////////////////////////////////////
 void PlaneMILGUIPlugin::OnDecreaseFlaps()
 {
-  ignition::math::Angle flap;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    flap.Radian(this->state.cmd_left_flap());
-  }
+  // ignition::math::Angle flap;
+  // {
+  //   std::lock_guard<std::mutex> lock(this->mutex);
+  //   flap.Radian(this->state.cmd_left_flap());
+  // }
 
-  msgs::Cessna msg;
-  if (flap.Degree() > -30)
-  {
-    flap -= this->angleStep;
-    msg.set_cmd_left_flap(flap.Radian());
-    msg.set_cmd_right_flap(flap.Radian());
-    this->controlPub->Publish(msg);
-  }
+  // msgs::Cessna msg;
+  // if (flap.Degree() > -30)
+  // {
+  //   flap -= this->angleStep;
+  //   msg.set_cmd_left_flap(flap.Radian());
+  //   msg.set_cmd_right_flap(flap.Radian());
+  //   this->controlPub->Publish(msg);
+  // }
+
+  control_msgs::msgs::RC ctrlMsg;
+  rollAngle -= 3.14/12;
+  ctrlMsg.set_roll(this->rollAngle);
+  this->RCPub->Publish(ctrlMsg);
 }
 
 /////////////////////////////////////////////////
 void PlaneMILGUIPlugin::OnIncreaseRoll()
 {
-  ignition::math::Angle aileron;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    aileron.Radian(this->state.cmd_left_aileron());
-  }
+  // ignition::math::Angle aileron;
+  // {
+  //   std::lock_guard<std::mutex> lock(this->mutex);
+  //   aileron.Radian(this->state.cmd_left_aileron());
+  // }
 
-  msgs::Cessna msg;
-  if (aileron.Degree() < 30)
-  {
-    aileron += this->angleStep;
-    msg.set_cmd_left_aileron(aileron.Radian());
-    msg.set_cmd_right_aileron(-aileron.Radian());
-    this->controlPub->Publish(msg);
-  }
+  // msgs::Cessna msg;
+  // if (aileron.Degree() < 30)
+  // {
+  //   aileron += this->angleStep;
+  //   msg.set_cmd_left_aileron(aileron.Radian());
+  //   msg.set_cmd_right_aileron(-aileron.Radian());
+  //   this->controlPub->Publish(msg);
+  // }
+
+  control_msgs::msgs::RC ctrlMsg;
+  rollAngle += 3.14/12;
+  ctrlMsg.set_roll(this->rollAngle);
+  this->RCPub->Publish(ctrlMsg);
 }
 
 /////////////////////////////////////////////////

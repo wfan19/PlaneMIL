@@ -27,6 +27,8 @@
 #ifndef Q_MOC_RUN
 #include <gazebo/transport/transport.hh>
 
+#include "../build/RC.pb.h"
+
 #include "../include/msgTypedefs.hh"
 #endif
 
@@ -123,6 +125,8 @@ namespace gazebo
 
     /// \brief Protection.
     private: std::mutex mutex;
+
+    private: float rollAngle{0.0};
   };
 }
 
