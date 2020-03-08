@@ -100,6 +100,12 @@ PlaneMILGUIPlugin::PlaneMILGUIPlugin()
   QShortcut *presetLanding = new QShortcut(QKeySequence('3'), this);
   QObject::connect(presetLanding, SIGNAL(activated()), this,
       SLOT(OnPresetLanding()));
+
+  ctrlMsg.set_time_usec(0);
+  ctrlMsg.set_altitude(0);
+  ctrlMsg.set_pitch(0);
+  ctrlMsg.set_roll(0);
+  ctrlMsg.set_yaw(0);
 }
 
 /////////////////////////////////////////////////
@@ -201,15 +207,10 @@ void PlaneMILGUIPlugin::OnIncreaseRoll()
   //   msg.set_cmd_right_aileron(-aileron.Radian());
   //   this->controlPub->Publish(msg);
   // }
-  control_msgs::msgs::RC ctrlMsg;
   rollAngle -= 3.14/48;
-  ctrlMsg.set_time_usec(0);
-  ctrlMsg.set_altitude(0);
-  ctrlMsg.set_pitch(0);
-  ctrlMsg.set_roll(this->rollAngle);
-  ctrlMsg.set_yaw(0);
-  this->RCPub->Publish(ctrlMsg);
-  gzlog << "onIncreaseRoll, new roll sp offset: " << rollAngle << std::endl;
+  this->ctrlMsg.set_roll(this->rollAngle);
+  this->RCPub->Publish(this->ctrlMsg);
+  gzdbg << "onIncreaseRoll, new roll sp offset: " << rollAngle << std::endl;
 }
 
 /////////////////////////////////////////////////
@@ -230,51 +231,56 @@ void PlaneMILGUIPlugin::OnDecreaseRoll()
   //   this->controlPub->Publish(msg);
   // }
 
-  control_msgs::msgs::RC ctrlMsg;
   rollAngle += 3.14/48;
-  ctrlMsg.set_time_usec(0);
-  ctrlMsg.set_altitude(0);
-  ctrlMsg.set_pitch(0);
-  ctrlMsg.set_roll(this->rollAngle);
-  ctrlMsg.set_yaw(0);
-  this->RCPub->Publish(ctrlMsg);
-  gzlog << "onDecreaseRoll, new roll sp offset: " << rollAngle << std::endl;
+  this->ctrlMsg.set_roll(this->rollAngle);
+  this->RCPub->Publish(this->ctrlMsg);
+  gzdbg << "onDecreaseRoll, new roll sp offset: " << rollAngle << std::endl;
 }
 
 /////////////////////////////////////////////////
 void PlaneMILGUIPlugin::OnIncreaseElevators()
 {
-  ignition::math::Angle elevators;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    elevators.Radian(this->state.cmd_elevators());
-  }
+  // ignition::math::Angle elevators;
+  // {
+  //   std::lock_guard<std::mutex> lock(this->mutex);
+  //   elevators.Radian(this->state.cmd_elevators());
+  // }
 
-  msgs::Cessna msg;
-  if (elevators.Degree() < 30)
-  {
-    elevators += this->angleStep;
-    msg.set_cmd_elevators(elevators.Radian());
-    this->controlPub->Publish(msg);
-  }
+  // msgs::Cessna msg;
+  // if (elevators.Degree() < 30)
+  // {
+  //   elevators += this->angleStep;
+  //   msg.set_cmd_elevators(elevators.Radian());
+  //   this->controlPub->Publish(msg);
+  // }
+
+  this->altitude -= 1.5;
+  this->ctrlMsg.set_altitude(this->altitude);
+  this->RCPub->Publish(this->ctrlMsg);
+  gzdbg << "onIncreaseElevators, new altitude sp offset: " << altitude << std::endl;
 }
 
 /////////////////////////////////////////////////
 void PlaneMILGUIPlugin::OnDecreaseElevators()
 {
-  ignition::math::Angle elevators;
-  {
-    std::lock_guard<std::mutex> lock(this->mutex);
-    elevators.Radian(this->state.cmd_elevators());
-  }
+  // ignition::math::Angle elevators;
+  // {
+  //   std::lock_guard<std::mutex> lock(this->mutex);
+  //   elevators.Radian(this->state.cmd_elevators());
+  // }
 
-  msgs::Cessna msg;
-  if (elevators.Degree() > -30)
-  {
-    elevators -= this->angleStep;
-    msg.set_cmd_elevators(elevators.Radian());
-    this->controlPub->Publish(msg);
-  }
+  // msgs::Cessna msg;
+  // if (elevators.Degree() > -30)
+  // {
+  //   elevators -= this->angleStep;
+  //   msg.set_cmd_elevators(elevators.Radian());
+  //   this->controlPub->Publish(msg);
+  // }
+
+  this->altitude += 1.5;
+  this->ctrlMsg.set_altitude(this->altitude);
+  this->RCPub->Publish(this->ctrlMsg);
+  gzdbg << "onDecreaseElevators, new altitude sp offset: " << altitude << std::endl;
 }
 
 /////////////////////////////////////////////////

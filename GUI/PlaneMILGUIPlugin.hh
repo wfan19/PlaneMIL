@@ -126,7 +126,11 @@ namespace gazebo
     /// \brief Protection.
     private: std::mutex mutex;
 
-    private: float rollAngle{0.0};
+  private:
+    control_msgs::msgs::RC ctrlMsg;
+
+    float rollAngle{0.0f};
+    float altitude{0.0f};
   };
 }
 
