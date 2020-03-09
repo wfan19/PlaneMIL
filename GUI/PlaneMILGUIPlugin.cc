@@ -254,9 +254,9 @@ void PlaneMILGUIPlugin::OnIncreaseElevators()
   //   this->controlPub->Publish(msg);
   // }
 
-  this->altitude += 1.5;
-  if(altitude > 40) {
-    altitude = 40;
+  this->altitude -= 1.5;
+  if(altitude < 0){
+    altitude = 0;
   }
   this->ctrlMsg.set_altitude(this->altitude);
   this->RCPub->Publish(this->ctrlMsg);
@@ -280,9 +280,9 @@ void PlaneMILGUIPlugin::OnDecreaseElevators()
   //   this->controlPub->Publish(msg);
   // }
 
-  this->altitude -= 1.5;
-  if(altitude < 0){
-    altitude = 0;
+  this->altitude += 1.5;
+  if(altitude > 40) {
+    altitude = 40;
   }
   this->ctrlMsg.set_altitude(this->altitude);
   this->RCPub->Publish(this->ctrlMsg);

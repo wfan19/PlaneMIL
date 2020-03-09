@@ -68,10 +68,13 @@ void AttitudeControl::setControlPitch()
     dt = currentTime - this->lastUpdateTime;
 
     target = lastHeadingSP.x(); // get pitch setpoint
-    error = target - bodyQuaternion.Pitch();
+    error = bodyQuaternion.Pitch() - target ;
     
-    double angleTarget = this->ELEVATOR_LIMIT * this->pitchPID.Update(error, dt); // Get target angle on a scale from -1 to 1, and then scale by limit
-    this->ctrlMsg.set_cmd_elevators(-angleTarget);
+    double angleTarget = -(this->ELEVATOR_LIMIT * this->pitchPID.Update(error, dt)); // Get target angle on a scale from -1 to 1, and then scale by limit
+    gzdbg << "AngleTarget: " << angleTarget << std::endl;
+    gzdbg << "Error: " << error << std::endl;
+    this->ctrlMsg.set_cmd_elevators(angleTarget);
+    // gzdbg << "Target, error, angleTarget: " << target << "," << error << "," << angleTarget << std::endl;
 
     this->attitudeCtrlPub->Publish(ctrlMsg);
 }
@@ -105,7 +108,7 @@ void AttitudeControl::initPIDs(sdf::ElementPtr &_sdf)
     pitch = _sdf->Get<ignition::math::Vector3d>("PID_pitch");
     roll = _sdf->Get<ignition::math::Vector3d>("PID_roll");
     
-    pitchPID.Init(pitch.X(), pitch.Y(), pitch.Z(), 0, 0, 1, -1);
+    pitchPID.Init(pitch.X(), pitch.Y(), pitch.Z(), 0.001, -0.001, 1, -1);
     pitchPID.SetCmd(0);
 
     rollPID.Init(roll.X(), roll.Y(), roll.Z(), 0, 0, 1, -1);

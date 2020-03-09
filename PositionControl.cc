@@ -74,19 +74,21 @@ void PositionControl::run()
 
 float PositionControl::getPitchSP()
 {
-    float altitudeTarget, error, pitchSP;
-    gazebo::common::Time currentTime;
+    // float altitudeTarget, error, pitchSP;
+    // gazebo::common::Time currentTime;
 
-    pitchSP = 0;
-    altitudeTarget = lastRCInputMsg.altitude();
+    // pitchSP = 0.1f;
+    // altitudeTarget = lastRCInputMsg.altitude();
 
-    error = altitudeTarget - lastAltitude;
-    currentTime = model->GetWorld()->SimTime();
+    // error = lastAltitude - altitudeTarget;
+    // currentTime = model->GetWorld()->SimTime();
 
-    pitchSP = altitudePID.Update(error, currentTime - lastUpdateTime);
-    lastUpdateTime = currentTime;
+    // pitchSP = altitudePID.Update(error, currentTime - lastUpdateTime);
+    // lastUpdateTime = currentTime;
+    // gzdbg << "Current pitch setpoint: " << pitchSP << ", error was "<< error << std::endl;
+    // return pitchSP;
 
-    return pitchSP;
+    return 0;
 }
 
 float PositionControl::getRollSP()
