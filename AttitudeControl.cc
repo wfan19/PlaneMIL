@@ -108,9 +108,9 @@ void AttitudeControl::initPIDs(sdf::ElementPtr &_sdf)
     pitch = _sdf->Get<ignition::math::Vector3d>("PID_pitch");
     roll = _sdf->Get<ignition::math::Vector3d>("PID_roll");
     
-    pitchPID.Init(pitch.X(), pitch.Y(), pitch.Z(), 0.001, -0.001, 1, -1);
+    pitchPID.Init(pitch.X(), pitch.Y(), pitch.Z(), 0.005, -0.005, 1, -1);
     pitchPID.SetCmd(0);
 
-    rollPID.Init(roll.X(), roll.Y(), roll.Z(), 0, 0, 1, -1);
+    rollPID.Init(roll.X(), roll.Y(), roll.Z(), 0.005, -0.005, 1, -1);
     rollPID.SetCmd(0);
 }

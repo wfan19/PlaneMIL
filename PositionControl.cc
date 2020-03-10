@@ -106,7 +106,7 @@ void PositionControl::initPIDs(sdf::ElementPtr &_sdf)
 
     altitude = _sdf->Get<ignition::math::Vector3d>("PID_altitude"); 
     
-    altitudePID.Init(altitude.X(), altitude.Y(), altitude.Z(), 0, 0, PITCH_MAX, -PITCH_MAX);
+    altitudePID.Init(altitude.X(), altitude.Y(), altitude.Z(), 0.001, -0.001, PITCH_MAX, -PITCH_MAX);
     altitudePID.SetCmd(0);
 
     gzdbg << "Got altitude PID with params " << altitude.X() << ", " << altitude.Y() << ", " << altitude.Z() << std::endl;
