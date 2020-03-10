@@ -145,10 +145,10 @@
 
       <!-- Plane control plugins added by Bill -->
       <plugin name="PositionControl" filename="./libPositionControl.so">
-        <PID_altitude>0.01 0.01 0</PID_altitude>
+        <PID_altitude>0.013 0.05 0</PID_altitude>
       </plugin>
       <plugin name="AttitudeControl" filename="./libAttitudeControl.so">
-        <PID_pitch>0.01 0.01 0</PID_pitch>
+        <PID_pitch>0.015 0.05 0</PID_pitch>
         <PID_roll>0.01 0.01 0</PID_roll>
       </plugin>
 

@@ -85,7 +85,7 @@ float PositionControl::getPitchSP()
 
         lastUpdateTime = currentTime;
         gzdbg << "AltitudeSP: " << altitudeTarget << std::endl;
-        gzdbg << "Current pitchSP: " << pitchSP << ", error:"<< error  << ", dt: " << dt << std::endl;
+        gzdbg << "Current pitchSP: " << pitchSP * 360 / 6.28 << std::endl;
     } else {
         gzerr << "PID Update time == 0" << std::endl;
     }
