@@ -45,6 +45,8 @@ namespace gazebo{
 
         float getRollSP();
 
+        void initPIDs(sdf::ElementPtr &_sdf);
+
         gazebo::common::Time lastUpdateTime;
         gazebo::physics::ModelPtr model;
 

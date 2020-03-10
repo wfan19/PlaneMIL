@@ -71,8 +71,6 @@ void AttitudeControl::setControlPitch()
     error = bodyQuaternion.Pitch() - target ;
     
     double angleTarget = -(this->ELEVATOR_LIMIT * this->pitchPID.Update(error, dt)); // Get target angle on a scale from -1 to 1, and then scale by limit
-    gzdbg << "AngleTarget: " << angleTarget << std::endl;
-    gzdbg << "Error: " << error << std::endl;
     this->ctrlMsg.set_cmd_elevators(angleTarget);
     // gzdbg << "Target, error, angleTarget: " << target << "," << error << "," << angleTarget << std::endl;
 
@@ -94,6 +92,8 @@ void AttitudeControl::setControlRoll()
     this->ctrlMsg.set_cmd_left_aileron(angleTarget);
     this->ctrlMsg.set_cmd_right_aileron(-angleTarget);
 
+    lastUpdateTime = currentTime;
+    
     this->attitudeCtrlPub->Publish(ctrlMsg);
 }
 

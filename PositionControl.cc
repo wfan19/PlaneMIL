@@ -16,11 +16,7 @@ void PositionControl::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 {
     this->model = _model;
 
-    ignition::math::Vector3d altitude;
-
-    altitude = _sdf->Get<ignition::math::Vector3d>("PID_altitude");
-    altitudePID.Init(altitude.X(), altitude.Y(), altitude.Z(), 0, 0, PITCH_MAX, -PITCH_MAX);
-    altitudePID.SetCmd(0);
+    initPIDs(_sdf);
 
     lastUpdateTime = this->model->GetWorld()->SimTime();
 
@@ -74,21 +70,26 @@ void PositionControl::run()
 
 float PositionControl::getPitchSP()
 {
-    // float altitudeTarget, error, pitchSP;
-    // gazebo::common::Time currentTime;
+    float altitudeTarget, error, pitchSP;
+    gazebo::common::Time currentTime;
 
-    // pitchSP = 0.1f;
-    // altitudeTarget = lastRCInputMsg.altitude();
+    pitchSP = 0.1f;
+    altitudeTarget = lastRCInputMsg.altitude();
 
-    // error = lastAltitude - altitudeTarget;
-    // currentTime = model->GetWorld()->SimTime();
+    error = lastAltitude - altitudeTarget;
+    currentTime = model->GetWorld()->SimTime();
+    gazebo::common::Time dt = currentTime - lastUpdateTime;
 
-    // pitchSP = altitudePID.Update(error, currentTime - lastUpdateTime);
-    // lastUpdateTime = currentTime;
-    // gzdbg << "Current pitch setpoint: " << pitchSP << ", error was "<< error << std::endl;
-    // return pitchSP;
+    if(dt != gazebo::common::Time(0,0)){
+        pitchSP = -altitudePID.Update(error, dt.Double());
 
-    return 0;
+        lastUpdateTime = currentTime;
+        gzdbg << "AltitudeSP: " << altitudeTarget << std::endl;
+        gzdbg << "Current pitchSP: " << pitchSP << ", error:"<< error  << ", dt: " << dt << std::endl;
+    } else {
+        gzerr << "PID Update time == 0" << std::endl;
+    }
+    return pitchSP;
 }
 
 float PositionControl::getRollSP()
@@ -97,4 +98,17 @@ float PositionControl::getRollSP()
     out = -std::atan(lastIMUMsg.linear_acceleration().y() / 9.80665f); //angle of force to counter
     out = lastRCInputMsg.roll();
     return out;
+}
+
+void PositionControl::initPIDs(sdf::ElementPtr &_sdf)
+{
+    ignition::math::Vector3d altitude;
+
+    altitude = _sdf->Get<ignition::math::Vector3d>("PID_altitude"); 
+    
+    altitudePID.Init(altitude.X(), altitude.Y(), altitude.Z(), 0, 0, PITCH_MAX, -PITCH_MAX);
+    altitudePID.SetCmd(0);
+
+    gzdbg << "Got altitude PID with params " << altitude.X() << ", " << altitude.Y() << ", " << altitude.Z() << std::endl;
+
 }
