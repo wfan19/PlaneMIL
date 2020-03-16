@@ -1,6 +1,7 @@
 #include <cmath>
 
 #include "AttitudeController.hh"
+#include "PIDFF.hh"
 
 class PositionController
 {
@@ -10,18 +11,16 @@ public:
     {
         double range;
 
-        double pitch;
-        double roll;
+        double pitch; // assumes up is positive
+        double roll; // assumes cw is positive (looking from behind)
         // double yaw;
-
-        double acceleration_lateral;
     };
 
     // Struct containing user settings 
     struct UserSettings
     {
         double altitude;
-        double roll;
+        double rollSP;
     };
 
     PositionController();
@@ -30,14 +29,19 @@ public:
     void PositionController::updateSensors(SensorData &_sensorData);
     void PositionController::updateUserSettings(UserSettings &_userSettings);
 
-    AttitudeController::AttitudeSP PositionController::controlPosition();
+    AttitudeController::AttitudeSP PositionController::controlPosition(double dt);
+    double PositionController::getPitchSP(double dt);
+    double PositionController::getRollSP();
+
 
 private:
+
+    PIDFF pid_altitude;
+
     double lastAltitude{0.0};
     double lastPitch{0.0};
     double lastRoll{0.0};
     // double lastYaw{0.0};
-    double lastAccel_lateral{0.0};
 
     double lastAltitudeSP{0.0};
     double lastRollSP{0.0};
