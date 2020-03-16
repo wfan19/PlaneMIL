@@ -45,7 +45,7 @@ double PIDFF::update(double target, double error, double dt)
     // Calculate feedforward term
     ff = this->kff * target;
 
-    
+    return p + integrator + d + ff;
 }
 
 void PIDFF::resetIntegrator()
