@@ -3,7 +3,7 @@ class PIDFF
 
 public:
 
-    PIDFF();
+    PIDFF(double kp, double ki, double kd, double kff, double imin, double imax, double min, double max);
     ~PIDFF();
 
     // Initialize the PIDFF with coefficients and limits

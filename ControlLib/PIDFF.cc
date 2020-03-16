@@ -1,8 +1,9 @@
 #include "include/PIDFF.hh"
 
-PIDFF::PIDFF()
+PIDFF::PIDFF(double p, double i, double d, double ff, double iMin, double iMax, double Min, double Max)
+    : kp(p), ki(i), kd(d), kff(ff), imin(iMin), imax(iMax), min(Min), max(Max)
 {
-
+    resetIntegrator();
 }
 
 PIDFF::~PIDFF()
@@ -24,10 +25,26 @@ void PIDFF::init(double kp, double ki, double kd, double kff, double imin, doubl
 
 double PIDFF::update(double target, double error, double dt)
 {
-    double p, i, d, ff;
-    p = i = d = ff = 0;
+    if(dt <= 0.0){
+        return -1;
+    }
 
-    p = this->kp * error;
+    double p, d, ff;
+    p = d = ff = 0;
+
+    // Calculate proportional term
+    p = this->kp * error; 
+    
+    // Calculate intergal term
+    this->integrator += this->ki * error * dt;
+    this->integrator = this->integrator > this->imax ? this->imax : this->integrator < this->imin ? this->imin : this->integrator; // anti-windup
+
+    // Calculate derivative term
+    d = this->kd * (error - lastError) / dt;
+    
+    // Calculate feedforward term
+    ff = this->kff * target;
+
     
 }
 
