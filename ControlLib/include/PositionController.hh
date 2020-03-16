@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "AttitudeController.hh"
 
 class PositionController
@@ -10,7 +12,7 @@ public:
 
         double pitch;
         double roll;
-        double yaw;
+        // double yaw;
 
         double acceleration_lateral;
     };
@@ -31,12 +33,12 @@ public:
     AttitudeController::AttitudeSP PositionController::controlPosition();
 
 private:
-    double lastRange{0.0};
+    double lastAltitude{0.0};
     double lastPitch{0.0};
-    double lastIMURoll{0.0};
-    double lastYaw{0.0};
+    double lastRoll{0.0};
+    // double lastYaw{0.0};
     double lastAccel_lateral{0.0};
 
-    double lastAltitude{0.0};
-    double lastUserRoll{0.0};
+    double lastAltitudeSP{0.0};
+    double lastRollSP{0.0};
 };
