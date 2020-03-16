@@ -19,13 +19,13 @@ public:
     AttitudeController();
     ~AttitudeController();
 
-    void AttitudeController::updateSensors(SensorDataStruct::SensorData &_sensorData);
-    void AttitudeController::updateAttitudeSP(AttitudeController::AttitudeSP &_attitudeSP);
+    void updateSensors(SensorDataStruct::SensorData &_sensorData);
+    void updateAttitudeSP(AttitudeController::AttitudeSP &_attitudeSP);
 
-    AttitudeController::ActuatorsSP AttitudeController::controlAttitudes(double dt);
+    AttitudeController::ActuatorsSP controlAttitudes(double dt);
 
-    double AttitudeController::controlPitch(double dt);
-    double AttitudeController::controlRoll(double dt);
+    double controlPitch(double dt);
+    double controlRoll(double dt);
 
 private:
 

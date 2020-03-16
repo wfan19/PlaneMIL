@@ -18,12 +18,12 @@ public:
     PositionController();
     ~PositionController();
 
-    void PositionController::updateSensors(SensorDataStruct::SensorData &_sensorData);
-    void PositionController::updateUserSettings(PositionController::UserSettings &_userSettings);
+    void updateSensors(SensorDataStruct::SensorData &_sensorData);
+    void updateUserSettings(PositionController::UserSettings &_userSettings);
 
-    AttitudeController::AttitudeSP PositionController::controlPosition(double dt);
-    double PositionController::getPitchSP(double dt);
-    double PositionController::getRollSP();
+    AttitudeController::AttitudeSP controlPosition(double dt);
+    double getPitchSP(double dt);
+    double getRollSP();
 
 
 private:

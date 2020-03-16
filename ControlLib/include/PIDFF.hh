@@ -7,13 +7,13 @@ public:
     ~PIDFF();
 
     // Initialize the PIDFF with coefficients and limits
-    void PIDFF::init(double kp, double ki, double kd, double kff, double imin, double imax, double min, double max);
+    void init(double kp, double ki, double kd, double kff, double imin, double imax, double min, double max);
 
     // Update PID with new error and elapsed time
-    double PIDFF::update(double target, double error, double dt);
+    double update(double target, double error, double dt);
 
     // Reset the integrator
-    void PIDFF::resetIntegrator();
+    void resetIntegrator();
 
 private:
     // PID params
@@ -35,67 +35,67 @@ private:
 public:
 
     // Setters and getters
-    void PIDFF::setKP(double kp){
+    void setKP(double kp){
         this->kp = kp;
     }
 
-    void PIDFF::setKI(double ki){
+    void setKI(double ki){
         this->ki = ki;
     }
 
-    void PIDFF::setKD(double kd){
+    void setKD(double kd){
         this->kd = kd;
     }
 
-    void PIDFF::setKFF(double kff){
+    void setKFF(double kff){
         this->kff = kff;
     }
 
-    void PIDFF::setIMin(double imin){
+    void setIMin(double imin){
         this->imin = imin;
     }
 
-    void PIDFF::setIMax(double imax){
+    void setIMax(double imax){
         this->imax = imax;
     }
 
-    void PIDFF::setMin(double min){
+    void setMin(double min){
         this->min = min;
     }
 
-    void PIDFF::setMax(double max){
+    void setMax(double max){
         this->max = max;
     }
 
-    double PIDFF::getKP(){
+    double getKP(){
         return kp;
     }
 
-    double PIDFF::getKI(){
+    double getKI(){
         return ki;
     }
 
-    double PIDFF::getKD(){
+    double getKD(){
         return kd;
     }
 
-    double PIDFF::getKFF(){
+    double getKFF(){
         return kff;
     }
 
-    double PIDFF::getIMin(){
+    double getIMin(){
         return imin;
     }
 
-    double PIDFF::getIMax(){
+    double getIMax(){
         return imax;
     }
 
-    double PIDFF::getMin(){
+    double getMin(){
         return min;
     }
 
-    double PIDFF::getMax(){
+    double getMax(){
         return max;
     }
 };
