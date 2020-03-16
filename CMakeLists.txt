@@ -57,6 +57,20 @@ add_library(control_msgs SHARED ${CONTROL_PROTO_SRCS})
 
 link_libraries(sensor_msgs control_msgs ${PROTOBUF_LIBRARY})
 
+# ------- #
+# ControlLib
+# ------- #
+set (controlLib
+    AttitudeController
+    PIDFF
+    PositionController
+)
+
+foreach(controlLibClass ${controlLib})
+    add_library(${controlLibClass} SHARED ControlLib/${controlLibClass}.cc)
+    target_link_libraries(${controlLibClass} ${GAZEBO_LIBRARIES})
+endforeach()
+
 
 # ------- #
 # Plugins
