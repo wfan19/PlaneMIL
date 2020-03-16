@@ -1,20 +1,12 @@
 #include <cmath>
 
 #include "AttitudeController.hh"
+#include "SensorDataStruct.hh"
 #include "PIDFF.hh"
 
 class PositionController
 {
 public:
-    // Struct containing sensor data
-    struct SensorData
-    {
-        double range;
-
-        double pitch; // assumes up is positive
-        double roll; // assumes cw is positive (looking from behind)
-        // double yaw;
-    };
 
     // Struct containing user settings 
     struct UserSettings
@@ -26,8 +18,8 @@ public:
     PositionController();
     ~PositionController();
 
-    void PositionController::updateSensors(SensorData &_sensorData);
-    void PositionController::updateUserSettings(UserSettings &_userSettings);
+    void PositionController::updateSensors(SensorDataStruct::SensorData &_sensorData);
+    void PositionController::updateUserSettings(PositionController::UserSettings &_userSettings);
 
     AttitudeController::AttitudeSP PositionController::controlPosition(double dt);
     double PositionController::getPitchSP(double dt);

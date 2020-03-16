@@ -9,7 +9,7 @@ PositionController::~PositionController()
 {
 }
 
-void PositionController::updateSensors(PositionController::SensorData &_sensorData)
+void PositionController::updateSensors(SensorDataStruct::SensorData &_sensorData)
 {
     this->lastPitch = _sensorData.pitch;
     this->lastRoll = _sensorData.roll;
