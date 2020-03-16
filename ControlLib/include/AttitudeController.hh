@@ -1,4 +1,5 @@
 #include "SensorDataStruct.hh"
+#include "PIDFF.hh"
 
 class AttitudeController
 {
@@ -21,10 +22,10 @@ public:
     void AttitudeController::updateSensors(SensorDataStruct::SensorData &_sensorData);
     void AttitudeController::updateAttitudeSP(AttitudeController::AttitudeSP &_attitudeSP);
 
-    AttitudeController::ActuatorsSP AttitudeController::controlAttitudes();
+    AttitudeController::ActuatorsSP AttitudeController::controlAttitudes(double dt);
 
-    double AttitudeController::controlPitch();
-    double AttitudeController::controlRoll();
+    double AttitudeController::controlPitch(double dt);
+    double AttitudeController::controlRoll(double dt);
 
 private:
 
