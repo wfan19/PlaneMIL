@@ -1,3 +1,6 @@
+#ifndef ATTITUDECONTROLLER_HH
+#define ATTITUDECONTROLLER_HH
+
 #include "SensorDataStruct.hh"
 #include "PIDFF.hh"
 
@@ -41,3 +44,5 @@ private:
     //double lastYawSP{0.0};
 
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef PIDFF_HH
+#define PIDFF_HH
+
 class PIDFF
 {
 
@@ -99,3 +102,5 @@ public:
         return max;
     }
 };
+
+#endif

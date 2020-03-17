@@ -1,4 +1,4 @@
-#include "AttitudeController.hh"
+#include "include/AttitudeController.hh"
 
 AttitudeController::AttitudeController()
     // Initialize the PIDs through the initialziation list:

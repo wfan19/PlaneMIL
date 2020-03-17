@@ -1,3 +1,6 @@
+#ifndef POSITIONCONTROLLER_HH
+#define POSITIONCONTROLLER_HH
+
 #include <cmath>
 
 #include "AttitudeController.hh"
@@ -38,3 +41,5 @@ private:
     double lastAltitudeSP{0.0};
     double lastRollSP{0.0};
 };
+
+#endif

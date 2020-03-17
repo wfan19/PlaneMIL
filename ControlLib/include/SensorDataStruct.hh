@@ -1,3 +1,5 @@
+#ifndef SENSORDATASTRUCT_HH
+#define SENSORDATASTRUCT_HH
 class SensorDataStruct{
 
 public:
@@ -12,3 +14,4 @@ public:
         // double yaw;
     };
 };
+#endif
