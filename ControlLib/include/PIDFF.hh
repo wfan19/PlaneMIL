@@ -6,11 +6,24 @@ class PIDFF
 
 public:
 
+    struct PID_config{
+        double kp;
+        double ki;
+        double kd;
+        double kff;
+        double imin;
+        double imax;
+        double min;
+        double max;
+    };
+
     PIDFF(double kp, double ki, double kd, double kff, double imin, double imax, double min, double max);
+    PIDFF(PIDFF::PID_config pidConfig);
     ~PIDFF();
 
     // Initialize the PIDFF with coefficients and limits
     void init(double kp, double ki, double kd, double kff, double imin, double imax, double min, double max);
+    void init(PID_config pidConfig);
 
     // Update PID with new error and elapsed time
     double update(double target, double error, double dt);

@@ -6,6 +6,12 @@ PIDFF::PIDFF(double p, double i, double d, double ff, double iMin, double iMax, 
     resetIntegrator();
 }
 
+PIDFF::PIDFF(PIDFF::PID_config pidConfig)
+    : kp(pidConfig.kp), ki(pidConfig.ki), kd(pidConfig.d), kff(pidConfig.kff), imin(pidConfig.imin), imax(pidConfig.imax), min(pidConfig.min), max(pidConfig.max)
+{
+    resetIntegrator();
+}
+
 PIDFF::~PIDFF()
 {
 
@@ -21,6 +27,18 @@ void PIDFF::init(double kp, double ki, double kd, double kff, double imin, doubl
     this->imax = imax;
     this->min = min;
     this->max = max;
+}
+
+void PIDFF::init(PIDFF::PID_config pidConfig)
+{
+    this->kp = pidConfig.kp;
+    this->ki = pidConfig.ki;
+    this->kd = pidConfig.kd;
+    this->kff = pidConfig.kff;
+    this->imin = pidConfig.imin;
+    this->imax = pidConfig.imax;
+    this->min = pidConfig.min;
+    this->max = pidConfig.max;
 }
 
 double PIDFF::update(double target, double error, double dt)
