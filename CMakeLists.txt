@@ -22,6 +22,7 @@ include_directories(SYSTEM
   ${Qt5Core_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}/eigen3	# Workaround for Eigen3
+  /home/bf01/Documents/Code/GazeboProjects/PlaneMIL/ControlLib/include
   )
 link_directories(${GAZEBO_LIBRARY_DIRS})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")

@@ -60,7 +60,7 @@ void AttitudeControl::run()
 
     gazebo::common::Time currentTime, dt;
     currentTime = this->model->GetWorld()->SimTime();
-    dt = currentTime - lastRollUpdateTime;
+    dt = currentTime - lastUpdateTime;
 
     if(dt != gazebo::common::Time(0,0))
     {
@@ -75,56 +75,19 @@ void AttitudeControl::run()
         attitudeSP.rollSP = lastHeadingSP.y();
         attitudeController.updateSensors(sensorData);
 
+        double pitchCtrl = attitudeController.controlPitch(dt.Double());
         double rollCtrl = attitudeController.controlRoll(dt.Double());
-        double angleTarget = this->AILERON_LIMIT * rollCtrl;
-        this->ctrlMsg.set_cmd_left_aileron(angleTarget);
-        this->ctrlMsg.set_cmd_right_aileron(-angleTarget);
+        double elevatorAngleTarget = this->ELEVATOR_LIMIT * pitchCtrl;
+        double aileronAngleTarget = this->AILERON_LIMIT * rollCtrl;
+
+        this->ctrlMsg.set_cmd_elevators(-elevatorAngleTarget);
+        this->ctrlMsg.set_cmd_left_aileron(aileronAngleTarget);
+        this->ctrlMsg.set_cmd_right_aileron(-aileronAngleTarget);
+    
         this->attitudeCtrlPub->Publish(this->ctrlMsg);
 
-        lastRollUpdateTime = currentTime;
+        lastUpdateTime = currentTime;
     }
-}
-
-void AttitudeControl::setControlPitch()
-{
-    float target, error;
-    gazebo::common::Time currentTime, dt;
-
-    currentTime = this->model->GetWorld()->SimTime();
-    dt = currentTime - this->lastUpdateTime;
-
-    target = lastHeadingSP.x(); // get pitch setpoint
-    error = bodyQuaternion.Pitch() - target ;
-    
-    double angleTarget = -(this->ELEVATOR_LIMIT * this->pitchPID.Update(error, dt)); // Get target angle on a scale from -1 to 1, and then scale by limit
-    this->ctrlMsg.set_cmd_elevators(angleTarget);
-    // gzdbg << "Target, error, angleTarget: " << target << "," << error << "," << angleTarget << std::endl;
-
-    this->attitudeCtrlPub->Publish(ctrlMsg);
-}
-
-void AttitudeControl::setControlRoll()
-{
-    float target, error;
-    gazebo::common::Time currentTime, dt;
-
-    currentTime = this->model->GetWorld()->SimTime();
-    dt = currentTime - this->lastUpdateTime;
-
-    target = lastHeadingSP.y(); // get roll setpoint
-    error = target - bodyQuaternion.Roll();
-    
-    double angleTarget = this->AILERON_LIMIT * this->rollPID.Update(error, dt); // Get target angle on a scale from -1 to 1, and then scale by limit
-    this->ctrlMsg.set_cmd_left_aileron(angleTarget);
-    this->ctrlMsg.set_cmd_right_aileron(-angleTarget);
-
-    lastUpdateTime = currentTime;
-    
-    this->attitudeCtrlPub->Publish(ctrlMsg);
-}
-
-void AttitudeControl::setControlYaw()
-{
 }
 
 void AttitudeControl::initPIDs(sdf::ElementPtr &_sdf)

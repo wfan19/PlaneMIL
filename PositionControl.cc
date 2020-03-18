@@ -63,63 +63,26 @@ void PositionControl::onRC(RCPtr &_rcMsg)
 
 void PositionControl::run()
 {
-    this->headingOut.set_x(this->getPitchSP());
-    this->headingOut.set_y(this->getRollSP());
-    this->headingOut.set_z(0);
-    this->headingSPPub->Publish(headingOut);
-
-    // gazebo::common::Time currentTime;
-    // gazebo::common::Time dt = currentTime - lastUpdateTime;
-
-    // if(dt != gazebo::common::Time(0,0))
-    // {
-    //     PositionController::UserSettings userInput;
-    //     userInput.altitude = lastRCInputMsg.altitude();
-    //     userInput.rollSP = lastRCInputMsg.roll();
-    //     positionController.updateUserSettings(userInput);
-
-    //     SensorDataStruct::SensorData sensorData;
-    //     sensorData.pitch = bodyQuaternion.Pitch();
-    //     sensorData.roll = bodyQuaternion.Roll();
-    //     sensorData.range = lastRangeMsg.current_distance();
-    //     positionController.updateSensors(sensorData);
-
-    //     AttitudeController::AttitudeSP attitudeSP = positionController.controlPosition(dt.Double());
-    //     lastUpdateTime = currentTime;
-    // }
-    
-}
-
-float PositionControl::getPitchSP()
-{
-    float altitudeTarget, error, pitchSP;
     gazebo::common::Time currentTime;
-
-    pitchSP = 0.1f;
-    altitudeTarget = lastRCInputMsg.altitude();
-
-    error = lastAltitude - altitudeTarget;
-    currentTime = model->GetWorld()->SimTime();
     gazebo::common::Time dt = currentTime - lastUpdateTime;
 
-    if(dt != gazebo::common::Time(0,0)){
-        pitchSP = -altitudePID.Update(error, dt.Double());
+    if(dt != gazebo::common::Time(0,0))
+    {
+        PositionController::UserSettings userInput;
+        userInput.altitude = lastRCInputMsg.altitude();
+        userInput.rollSP = lastRCInputMsg.roll();
+        positionController.updateUserSettings(userInput);
 
+        SensorDataStruct::SensorData sensorData;
+        sensorData.pitch = bodyQuaternion.Pitch();
+        sensorData.roll = bodyQuaternion.Roll();
+        sensorData.range = lastRangeMsg.current_distance();
+        positionController.updateSensors(sensorData);
+
+        AttitudeController::AttitudeSP attitudeSP = positionController.controlPosition(dt.Double());
         lastUpdateTime = currentTime;
-        gzdbg << "AltitudeSP: " << altitudeTarget << std::endl;
-        gzdbg << "Current pitchSP: " << pitchSP * 360 / 6.28 << std::endl;
-    } else {
-        gzerr << "PID Update time == 0" << std::endl;
     }
-    return pitchSP;
-}
-
-float PositionControl::getRollSP()
-{
-    float out;
-    out = -std::atan(lastIMUMsg.linear_acceleration().y() / 9.80665f); //angle of force to counter
-    out = lastRCInputMsg.roll();
-    return out;
+    
 }
 
 void PositionControl::initPIDs(sdf::ElementPtr &_sdf)
