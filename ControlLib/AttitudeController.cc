@@ -7,8 +7,20 @@ AttitudeController::AttitudeController(PIDFF::PID_config PIDConfig_pitch, PIDFF:
 {
 }
 
+AttitudeController::AttitudeController()
+    : pid_pitch(0,0,0,0,0,0,0,0)
+    , pid_roll(0,0,0,0,0,0,0,0)
+{
+}
+
 AttitudeController::~AttitudeController()
 {
+}
+
+void AttitudeController::init(PIDFF::PID_config PIDConfig_pitch, PIDFF::PID_config PIDConfig_roll)
+{
+    pid_pitch.init(PIDConfig_pitch);
+    pid_roll.init(PIDConfig_roll);
 }
 
 void AttitudeController::updateSensors(SensorDataStruct::SensorData &_sensorData)

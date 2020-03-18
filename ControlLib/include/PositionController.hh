@@ -19,7 +19,10 @@ public:
     };
 
     PositionController(PIDFF::PID_config PIDConfig_altitude);
+    PositionController();
     ~PositionController();
+
+    void init(PIDFF::PID_config PIDConfig_altitude);
 
     void updateSensors(SensorDataStruct::SensorData &_sensorData);
     void updateUserSettings(PositionController::UserSettings &_userSettings);

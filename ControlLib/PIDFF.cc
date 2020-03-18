@@ -7,7 +7,7 @@ PIDFF::PIDFF(double p, double i, double d, double ff, double iMin, double iMax, 
 }
 
 PIDFF::PIDFF(PIDFF::PID_config pidConfig)
-    : kp(pidConfig.kp), ki(pidConfig.ki), kd(pidConfig.d), kff(pidConfig.kff), imin(pidConfig.imin), imax(pidConfig.imax), min(pidConfig.min), max(pidConfig.max)
+    : kp(pidConfig.kp), ki(pidConfig.ki), kd(pidConfig.kd), kff(pidConfig.kff), imin(pidConfig.imin), imax(pidConfig.imax), min(pidConfig.min), max(pidConfig.max)
 {
     resetIntegrator();
 }

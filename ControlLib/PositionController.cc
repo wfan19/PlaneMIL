@@ -5,8 +5,19 @@ PositionController::PositionController(PIDFF::PID_config PIDConfig_altitude)
 {
 }
 
+// Default constructor
+PositionController::PositionController()
+    : pid_altitude(0,0,0,0,0,0,0,0)
+{
+}
+
 PositionController::~PositionController()
 {
+}
+
+void PositionController::init(PIDFF::PID_config pidConfig)
+{
+    pid_altitude.init(pidConfig);
 }
 
 void PositionController::updateSensors(SensorDataStruct::SensorData &_sensorData)

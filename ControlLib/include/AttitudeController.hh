@@ -20,7 +20,10 @@ public:
     };
 
     AttitudeController(PIDFF::PID_config PIDConfig_pitch, PIDFF::PID_config PIDConfig_roll);
+    AttitudeController();
     ~AttitudeController();
+
+    void init(PIDFF::PID_config PIDConfig_pitch, PIDFF::PID_config PIDConfig_roll);
 
     void updateSensors(SensorDataStruct::SensorData &_sensorData);
     void updateAttitudeSP(AttitudeController::AttitudeSP &_attitudeSP);
