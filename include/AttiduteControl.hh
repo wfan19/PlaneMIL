@@ -18,6 +18,9 @@
 
 #include "../build/IMU.pb.h"
 
+#include "../ControlLib/include/AttitudeController.hh"
+#include "../ControlLib/include/SensorDataStruct.hh"
+
 namespace gazebo{
     class GZ_PLUGIN_VISIBLE AttitudeControl : public ModelPlugin{
     public:
@@ -53,6 +56,7 @@ namespace gazebo{
 
         physics::ModelPtr model;
         gazebo::common::Time lastUpdateTime;
+        gazebo::common::Time lastRollUpdateTime;
 
         msgs::Cessna ctrlMsg;
 
@@ -61,6 +65,8 @@ namespace gazebo{
         gazebo::common::PID yawPID;
 
         ignition::math::Quaterniond bodyQuaternion;
+
+        AttitudeController attitudeController;
 
         float lastPitchOutput{0.0};
         float lastRollOutput{0.0};

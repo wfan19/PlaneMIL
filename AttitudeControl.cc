@@ -56,7 +56,33 @@ void AttitudeControl::onIMU(IMUPtr &_imuMsg)
 void AttitudeControl::run()
 {
     setControlPitch();
-    setControlRoll();
+    // setControlRoll();
+
+    gazebo::common::Time currentTime, dt;
+    currentTime = this->model->GetWorld()->SimTime();
+    dt = currentTime - lastRollUpdateTime;
+
+    if(dt != gazebo::common::Time(0,0))
+    {
+        SensorDataStruct::SensorData sensorData;
+        sensorData.pitch = bodyQuaternion.Pitch();
+        sensorData.roll = bodyQuaternion.Roll();
+        sensorData.range = -1;
+        attitudeController.updateSensors(sensorData);
+
+        AttitudeController::AttitudeSP attitudeSP;
+        attitudeSP.pitchSP = lastHeadingSP.x();
+        attitudeSP.rollSP = lastHeadingSP.y();
+        attitudeController.updateSensors(sensorData);
+
+        double rollCtrl = attitudeController.controlRoll(dt.Double());
+        double angleTarget = this->AILERON_LIMIT * rollCtrl;
+        this->ctrlMsg.set_cmd_left_aileron(angleTarget);
+        this->ctrlMsg.set_cmd_right_aileron(-angleTarget);
+        this->attitudeCtrlPub->Publish(this->ctrlMsg);
+
+        lastRollUpdateTime = currentTime;
+    }
 }
 
 void AttitudeControl::setControlPitch()
@@ -113,4 +139,24 @@ void AttitudeControl::initPIDs(sdf::ElementPtr &_sdf)
 
     rollPID.Init(roll.X(), roll.Y(), roll.Z(), 0.005, -0.005, 1, -1);
     rollPID.SetCmd(0);
+
+    PIDFF::PID_config pitchConfig;
+    pitchConfig.kp = pitch.X();
+    pitchConfig.ki = pitch.Y();
+    pitchConfig.kd = pitch.Z();
+    pitchConfig.imin = -0.005;
+    pitchConfig.imax = 0.005;
+    pitchConfig.min = -1;
+    pitchConfig.max = 1;
+
+    PIDFF::PID_config rollConfig;
+    rollConfig.kp = roll.X();
+    rollConfig.ki = roll.Y();
+    rollConfig.kd = roll.Z();
+    rollConfig.imin = -0.005;
+    rollConfig.imax = 0.005;
+    rollConfig.min = -1;
+    rollConfig.max = 1;
+
+    attitudeController.init(pitchConfig, rollConfig);
 }
