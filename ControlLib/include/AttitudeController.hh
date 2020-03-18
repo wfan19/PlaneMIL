@@ -19,7 +19,7 @@ public:
         double aileronsSP;
     };
 
-    AttitudeController();
+    AttitudeController(PIDFF::PID_config PIDConfig_pitch, PIDFF::PID_config PIDConfig_roll);
     ~AttitudeController();
 
     void updateSensors(SensorDataStruct::SensorData &_sensorData);

@@ -1,7 +1,7 @@
 #include "include/PositionController.hh"
 
-PositionController::PositionController()
-    : pid_altitude(0.13, 0.05, 0, 0, -1, 1, -1, 1) // PID controller initialization
+PositionController::PositionController(PIDFF::PID_config PIDConfig_altitude)
+    : pid_altitude(PIDConfig_altitude) // PID controller initialization
 {
 }
 

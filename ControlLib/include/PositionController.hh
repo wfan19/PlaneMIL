@@ -18,7 +18,7 @@ public:
         double rollSP;
     };
 
-    PositionController();
+    PositionController(PIDFF::PID_config PIDConfig_altitude);
     ~PositionController();
 
     void updateSensors(SensorDataStruct::SensorData &_sensorData);

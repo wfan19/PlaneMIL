@@ -1,9 +1,9 @@
 #include "include/AttitudeController.hh"
 
-AttitudeController::AttitudeController()
+AttitudeController::AttitudeController(PIDFF::PID_config PIDConfig_pitch, PIDFF::PID_config PIDConfig_roll)
     // Initialize the PIDs through the initialziation list:
-    : pid_pitch(0.015, 0.05, 0, 0, -1, 1, -1, 1)
-    , pid_roll(0.01, 0.01, 0, 0, -1, 1, -1, 1)
+    : pid_pitch(PIDConfig_pitch)
+    , pid_roll(PIDConfig_roll)
 {
 }
 
