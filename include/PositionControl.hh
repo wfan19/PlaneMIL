@@ -18,6 +18,9 @@
 
 #include "msgTypedefs.hh"
 
+#include "../ControlLib/include/PositionController.hh"
+#include "../ControlLib/include/SensorDataStruct.hh"
+
 namespace gazebo{
 
 
@@ -68,6 +71,8 @@ namespace gazebo{
         gazebo::common::PID altitudePID;
 
         ignition::math::Quaterniond bodyQuaternion;
+
+        PositionController positionController;
 
         float lastAltitude{0.0f};
 

@@ -5,6 +5,7 @@ using namespace gazebo;
 GZ_REGISTER_MODEL_PLUGIN(PositionControl);
 
 PositionControl::PositionControl()
+    : positionController()
 {
 }
 
@@ -66,6 +67,27 @@ void PositionControl::run()
     this->headingOut.set_y(this->getRollSP());
     this->headingOut.set_z(0);
     this->headingSPPub->Publish(headingOut);
+
+    // gazebo::common::Time currentTime;
+    // gazebo::common::Time dt = currentTime - lastUpdateTime;
+
+    // if(dt != gazebo::common::Time(0,0))
+    // {
+    //     PositionController::UserSettings userInput;
+    //     userInput.altitude = lastRCInputMsg.altitude();
+    //     userInput.rollSP = lastRCInputMsg.roll();
+    //     positionController.updateUserSettings(userInput);
+
+    //     SensorDataStruct::SensorData sensorData;
+    //     sensorData.pitch = bodyQuaternion.Pitch();
+    //     sensorData.roll = bodyQuaternion.Roll();
+    //     sensorData.range = lastRangeMsg.current_distance();
+    //     positionController.updateSensors(sensorData);
+
+    //     AttitudeController::AttitudeSP attitudeSP = positionController.controlPosition(dt.Double());
+    //     lastUpdateTime = currentTime;
+    // }
+    
 }
 
 float PositionControl::getPitchSP()
@@ -108,6 +130,17 @@ void PositionControl::initPIDs(sdf::ElementPtr &_sdf)
     
     altitudePID.Init(altitude.X(), altitude.Y(), altitude.Z(), 0.001, -0.001, PITCH_MAX, -PITCH_MAX);
     altitudePID.SetCmd(0);
+
+    PIDFF::PID_config altitudeConfig;
+    altitudeConfig.kp = altitude.X();
+    altitudeConfig.ki = altitude.Y();
+    altitudeConfig.kd = altitude.Z();
+    altitudeConfig.imin = -0.001;
+    altitudeConfig.imax = 0.001;
+    altitudeConfig.min = -PITCH_MAX;
+    altitudeConfig.max = PITCH_MAX;
+
+    positionController.init(altitudeConfig);
 
     gzdbg << "Got altitude PID with params " << altitude.X() << ", " << altitude.Y() << ", " << altitude.Z() << std::endl;
 
